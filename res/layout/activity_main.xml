@@ -9,8 +9,55 @@
     tools:context=".MainActivity" >
 
     <TextView
+        android:id="@+id/text_view_new_task"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/hello_world" />
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentTop="true"
+        android:text="@string/new_task"
+        android:textAppearance="?android:attr/textAppearanceMedium" />
+
+    <EditText
+        android:id="@+id/edit_text_task"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_below="@+id/text_view_new_task"
+        android:ems="10"
+        android:hint="@string/new_task_hint" >
+
+        <requestFocus />
+
+        <requestFocus />
+    </EditText>
+
+    <Button
+        android:id="@+id/button_add"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_alignTop="@+id/edit_text_task"
+        android:onClick="addTask"
+        android:text="@string/add" />
+
+    <TextView
+        android:id="@+id/text_view_tasks"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentRight="true"
+        android:layout_below="@+id/button_add"
+        android:text="@string/tasks"
+        android:textAppearance="?android:attr/textAppearanceMedium" />
+    <ListView
+        android:id="@+id/listViewTasks"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/text_view_tasks"
+        android:layout_alignRight="@+id/text_view_tasks"
+        android:layout_below="@+id/text_view_tasks"
+        android:layout_marginTop="16dp">
+    </ListView>
 
 </RelativeLayout>
