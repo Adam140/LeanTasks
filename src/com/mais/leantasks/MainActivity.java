@@ -4,22 +4,27 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 
-import com.mais.leantasks.model.Task;
-import com.mais.leantasks.sql.Table;
-import com.mais.leantasks.sql.Tasks;
-
-import android.os.Bundle;
+import android.annotation.SuppressLint;
 import android.app.ActionBar;
 import android.app.Activity;
+import android.content.Context;
+import android.os.Bundle;
 import android.view.Menu;
 import android.view.View;
-import android.widget.ArrayAdapter;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 import android.widget.ListView;
+
+import com.mais.leantasks.model.Task;
+import com.mais.leantasks.sql.Table;
 
 public class MainActivity extends Activity {
 
 	private Table table;
+	private ListView listTasks;
+	private List<Task> tasks;
+	private TaskArrayAdapter taskArrayAdapter;
+
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -27,16 +32,23 @@ public class MainActivity extends Activity {
 		ab.setDisplayUseLogoEnabled(true);
 		ab.setDisplayShowTitleEnabled(false);
 		setContentView(R.layout.activity_main);
-		
+
 		table = new Table(this);
 
-		List<Task> values = table.tasks.selectAll();
+		tasks = table.tasks.selectAll();
+
+		listTasks = (ListView) findViewById(R.id.list_view_tasks);
+
+		taskArrayAdapter = new TaskArrayAdapter(this, R.layout.task, tasks);
+		taskArrayAdapter.setTable(table);
+
+		// Wstawiamy nasz adapter do elementu ListView, który wype³niamy
+		listTasks.setAdapter(taskArrayAdapter);
+
+		// Je¿eli zmieni siê zawartoœæ listy, wywo³ujemy metodê,
+		// która poinformuje o tym nasz adapter
+		taskArrayAdapter.notifyDataSetChanged();
 		
-		ListView list = (ListView) findViewById(R.id.listViewTasks);
-//		
-//		ArrayAdapter<Task> adapter = new ArrayAdapter<Task>(this,
-//				android.R.layout.simple_list_item_1, values);
-//		list.setAdapter(adapter);
 	}
 
 	@Override
@@ -45,7 +57,8 @@ public class MainActivity extends Activity {
 		getMenuInflater().inflate(R.menu.main, menu);
 		return true;
 	}
-	
+
+	@SuppressLint("SimpleDateFormat")
 	public void onClick(View view) {
 
 		switch (view.getId()) {
@@ -58,10 +71,15 @@ public class MainActivity extends Activity {
 			task.setUpdatedDate(sdf.format(new Date()));
 			task.setArchived(false);
 			task.setChecked(false);
-			
+
 			long id = table.tasks.create(task);
 			task.setId(id);
-			
+
+			this.tasks.add(task);
+			text.setText("");
+			text.clearFocus();
+			InputMethodManager inputManager = (InputMethodManager) this.getSystemService(Context.INPUT_METHOD_SERVICE); 
+			inputManager.hideSoftInputFromWindow(this.getCurrentFocus().getWindowToken(), InputMethodManager.HIDE_NOT_ALWAYS); 
 			break;
 		}
 	}
