@@ -1,12 +1,11 @@
 package com.mais.leantasks.model;
 
-import java.util.Date;
-
 public class Task {
 
 	private long id;
 	private String text;
-	private Date date;
+	private String createdDate;
+	private String updatedDate;
 	private boolean checked;
 	private boolean archived;
 	
@@ -22,17 +21,17 @@ public class Task {
 	public void setText(String text) {
 		this.text = text;
 	}
-	public Date getDate() {
-		return date;
+	public String getCreatedDate() {
+		return createdDate;
 	}
-	public void setDate(Date date) {
-		this.date = date;
+	public void setCreatedDate(String createdDate) {
+		this.createdDate = createdDate;
 	}
-	public String getDateString() {
-		return date.toString();
+	public String getUpdatedDate() {
+		return updatedDate;
 	}
-	public void setDate(String date) {
-		this.date = new Date(date);
+	public void setUpdatedDate(String updatedDate) {
+		this.updatedDate = updatedDate;
 	}
 	public boolean getChecked() {
 		return checked;
@@ -67,7 +66,7 @@ public class Task {
 	
 	@Override
 	public String toString() {
-		return "Task [id=" + id + ", text=" + text + ", date=" + date
+		return "Task [id=" + id + ", text=" + text + ", date=" + createdDate
 				+ ", checked=" + checked + ", archived=" + archived + "]";
 	}
 	

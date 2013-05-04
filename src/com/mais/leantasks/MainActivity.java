@@ -1,10 +1,12 @@
 package com.mais.leantasks;
 
+import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 
 import com.mais.leantasks.model.Task;
-import com.mais.leantasks.sql.TasksDataSource;
+import com.mais.leantasks.sql.Table;
+import com.mais.leantasks.sql.Tasks;
 
 import android.os.Bundle;
 import android.app.ActionBar;
@@ -17,7 +19,7 @@ import android.widget.ListView;
 
 public class MainActivity extends Activity {
 
-	private TasksDataSource taskDataSource;
+	private Table table;
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -26,11 +28,11 @@ public class MainActivity extends Activity {
 		ab.setDisplayShowTitleEnabled(false);
 		setContentView(R.layout.activity_main);
 		
-		taskDataSource = new TasksDataSource(this);
-		taskDataSource.open();
+		table = new Table(this);
 
-//		List<Task> values = taskDataSource.getAllTasks();
-//		ListView list = (ListView) findViewById(R.id.listViewTasks);
+		List<Task> values = table.tasks.selectAll();
+		
+		ListView list = (ListView) findViewById(R.id.listViewTasks);
 //		
 //		ArrayAdapter<Task> adapter = new ArrayAdapter<Task>(this,
 //				android.R.layout.simple_list_item_1, values);
@@ -50,12 +52,14 @@ public class MainActivity extends Activity {
 		case R.id.button_add:
 			Task task = new Task();
 			EditText text = (EditText) findViewById(R.id.edit_text_task);
+			SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH-mm-ss");
 			task.setText(text.getText().toString());
-			task.setDate(new Date());
+			task.setCreatedDate(sdf.format(new Date()));
+			task.setUpdatedDate(sdf.format(new Date()));
 			task.setArchived(false);
 			task.setChecked(false);
 			
-			long id = taskDataSource.createTask(task);
+			long id = table.tasks.create(task);
 			task.setId(id);
 			
 			break;
