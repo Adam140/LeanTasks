@@ -5,9 +5,9 @@ import java.util.List;
 public class Task {
 
 	private long id;
-	private String text;
-	private String createdDate;
-	private String updatedDate;
+	private String text = "";
+	private String createdDate = "";
+	private String updatedDate = "";
 	private boolean checked;
 	private boolean archived;
 
