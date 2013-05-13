@@ -40,7 +40,7 @@ public class MainActivity extends Activity{
 	private List<Task> tasks;
 	private TaskArrayAdapter taskArrayAdapter;
 
-//	private GestureDetector  detector = new GestureDetector (this, new Gesture());
+	private Gesture g;
 	
 	private Task currentTask;
 	private EditText editTextTask;
@@ -52,6 +52,7 @@ public class MainActivity extends Activity{
 		ab.setDisplayUseLogoEnabled(true);
 		ab.setDisplayShowTitleEnabled(false);
 		setContentView(R.layout.activity_main);
+		g = new Gesture(this);
 
 		table = new Table(this);
 
@@ -59,14 +60,13 @@ public class MainActivity extends Activity{
 
 		listTasks = (ListView) findViewById(R.id.list_view_tasks);
 		taskArrayAdapter = new TaskArrayAdapter(this, R.layout.task, tasks);
-		taskArrayAdapter.setTable(table);
 
 		listTasks.setClickable(true);
 		listTasks.setItemsCanFocus(true);
 		listTasks.setOnItemClickListener(clickOnTask);
 		listTasks.setOnItemLongClickListener(editOnTask);
 		listTasks.setAdapter(taskArrayAdapter);
-		listTasks.setOnTouchListener(deleteGesture);
+		listTasks.setOnTouchListener(g);
 		
 		taskArrayAdapter.notifyDataSetChanged();
 
@@ -134,7 +134,6 @@ public class MainActivity extends Activity{
 		@Override
 		public boolean onItemLongClick(AdapterView<?> tasks, View view, int position, long id) {
 			currentTask= (Task) tasks.getItemAtPosition(position);
-			boolean test = false;
 			showDialog(DIALOG_EDIT_TASK);
 			return true;
 		}
@@ -170,13 +169,20 @@ public class MainActivity extends Activity{
 		}
 	};
 	
-	private OnTouchListener deleteGesture = new OnTouchListener() {
-		@Override
-		public boolean onTouch(View v, MotionEvent event) {
-//			detector.onTouchEvent(event);
-			return false;
-		}
-	};
+	 @Override
+	    public boolean onTouchEvent(MotionEvent event) {
+	        // or implement in activity or component. When your not assigning to a child component.
+	        return g.getDetector().onTouchEvent(event); 
+	    }
+	
+//	private OnTouchListener deleteGesture = new OnTouchListener() {
+//		@Override
+//		public boolean onTouch(View v, MotionEvent event) {
+//			listTasks.onTouchEvent(event);
+//			detector = new GestureDetector(g);
+//			return (detector.onTouchEvent(event));
+//		}
+//	};
 
 
 }
