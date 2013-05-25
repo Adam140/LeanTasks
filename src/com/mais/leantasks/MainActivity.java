@@ -44,6 +44,50 @@ public class MainActivity extends Activity{
 	
 	private Task currentTask;
 	private EditText editTextTask;
+	
+	private OnItemClickListener clickOnTask = new OnItemClickListener() {
+		@Override
+		public void onItemClick(AdapterView<?> tasks, View view, int position, long id) {
+			Task task = (Task) tasks.getItemAtPosition(position);
+			boolean checked = !task.isChecked();
+			((CheckBox) view.findViewById(R.id.task_check_box)).setChecked(checked);
+			task.setChecked(checked);
+			task.setUpdatedDate(new Date().toString());
+			table.tasks.update(task);
+		}
+	};
+	
+	private OnItemLongClickListener editOnTask = new OnItemLongClickListener() {
+		@Override
+		public boolean onItemLongClick(AdapterView<?> tasks, View view, int position, long id) {
+			currentTask= (Task) tasks.getItemAtPosition(position);
+			showDialog(DIALOG_EDIT_TASK);
+			return true;
+		}
+	};
+	
+	private DialogInterface.OnClickListener dialogButtonClick = new DialogInterface.OnClickListener() {
+		@Override
+		public void onClick(DialogInterface dialog, int which) {
+			if(which == dialog.BUTTON_POSITIVE)
+			{
+				if(currentTask != null && editTextTask != null)
+				{
+					currentTask.setText(editTextTask.getText().toString());
+					currentTask.setUpdatedDate(new Date().toString());
+					table.tasks.update(currentTask);
+				}
+			}
+		}
+	};
+	
+	private OnTouchListener deleteGesture = new OnTouchListener() {
+		@Override
+		public boolean onTouch(View v, MotionEvent event) {
+//			detector.onTouchEvent(event);
+			return false;
+		}
+	};
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -117,28 +161,6 @@ public class MainActivity extends Activity{
 	    
 		return dialogBuilder.create();
 	}
-
-	private OnItemClickListener clickOnTask = new OnItemClickListener() {
-		@Override
-		public void onItemClick(AdapterView<?> tasks, View view, int position, long id) {
-			Task task = (Task) tasks.getItemAtPosition(position);
-			boolean checked = !task.isChecked();
-			((CheckBox) view.findViewById(R.id.task_check_box)).setChecked(checked);
-			task.setChecked(checked);
-			task.setUpdatedDate(new Date().toString());
-			table.tasks.update(task);
-		}
-	};
-	
-	private OnItemLongClickListener editOnTask = new OnItemLongClickListener() {
-		@Override
-		public boolean onItemLongClick(AdapterView<?> tasks, View view, int position, long id) {
-			currentTask= (Task) tasks.getItemAtPosition(position);
-			boolean test = false;
-			showDialog(DIALOG_EDIT_TASK);
-			return true;
-		}
-	};
 	
 	protected Dialog onCreateDialog(int id) {
 		return createCustomAlertDialog();
@@ -154,29 +176,4 @@ public class MainActivity extends Activity{
 		    editTextTask.setText(currentTask.getText());
 		}
 	}
-
-	private DialogInterface.OnClickListener dialogButtonClick = new DialogInterface.OnClickListener() {
-		@Override
-		public void onClick(DialogInterface dialog, int which) {
-			if(which == dialog.BUTTON_POSITIVE)
-			{
-				if(currentTask != null && editTextTask != null)
-				{
-					currentTask.setText(editTextTask.getText().toString());
-					currentTask.setUpdatedDate(new Date().toString());
-					table.tasks.update(currentTask);
-				}
-			}
-		}
-	};
-	
-	private OnTouchListener deleteGesture = new OnTouchListener() {
-		@Override
-		public boolean onTouch(View v, MotionEvent event) {
-//			detector.onTouchEvent(event);
-			return false;
-		}
-	};
-
-
 }
