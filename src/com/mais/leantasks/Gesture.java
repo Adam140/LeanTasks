@@ -1,46 +1,70 @@
 package com.mais.leantasks;
 
-import android.view.GestureDetector.OnGestureListener;
+import android.graphics.Paint;
+import android.view.GestureDetector.SimpleOnGestureListener;
 import android.view.MotionEvent;
+import android.widget.CheckBox;
+import android.widget.ListView;
 
-public class Gesture implements OnGestureListener {
+import com.mais.leantasks.model.Task;
+import com.mais.leantasks.sql.Table;
 
-	@Override
-	public boolean onDown(MotionEvent e) {
-		// TODO Auto-generated method stub
-		return false;
-	}
+public class Gesture extends SimpleOnGestureListener
+ {
+    private Table table;
+    private ListView listView;
+    private final static int PATH_LENGHT = 200;
+    
 
-	@Override
-	public boolean onFling(MotionEvent e1, MotionEvent e2, float velocityX, float velocityY) {
-		// TODO Auto-generated method stub
-		if(Math.abs(e2.getX() - e1.getX()) > 100)
-			System.out.println("JUPI");
-		return false;
-	}
+    public Gesture()
+    {
+        super();
+    }
+    
+    public Gesture(ListView listView, Table table)
+    {
+    	super();
+    	this.table = table;
+    	this.listView = listView;
+    }
 
-	@Override
-	public void onLongPress(MotionEvent e) {
-		// TODO Auto-generated method stub
-		
-	}
+    @Override
+    public boolean onFling(MotionEvent e1, MotionEvent e2, float velocityX, float velocityY) {
+    	if(Math.abs(e2.getX() - e1.getX()) > PATH_LENGHT){
+    		int id = listView.pointToPosition((int) e1.getX(), (int) e1.getY());
+    		if(id != -1)
+    		{
+    			Task task = (Task)listView.getItemAtPosition(id);
+	    		CheckBox checkBox = (CheckBox) listView.getChildAt(id).findViewById(R.id.task_check_box);
+	    		boolean archived = task.isArchived();
+	    		
+	    		if(archived)
+	    		{
+	    			checkBox.setPaintFlags(checkBox.getPaintFlags() & (~ Paint.STRIKE_THRU_TEXT_FLAG));
+	    		}
+	    		else
+	    		{
+	    			checkBox.setPaintFlags(checkBox.getPaintFlags() | Paint.STRIKE_THRU_TEXT_FLAG);
+	    		}
+	    		
+	    		task.setArchived(!archived);
+	    		table.tasks.update(task);
+	    		
+//	    		TaskArrayAdapter adapter = (TaskArrayAdapter) listView.getAdapter();
+//	    		table.tasks.delete((Task) task);
+//	    		adapter.remove(task);
+	    		
+	    		return true;
+    		}
+    		
+    	}
+        return super.onFling(e1, e2, velocityX, velocityY);
+    }
 
-	@Override
-	public boolean onScroll(MotionEvent e1, MotionEvent e2, float distanceX, float distanceY) {
-		// TODO Auto-generated method stub
-		return false;
-	}
+    @Override
+    public boolean onSingleTapConfirmed(MotionEvent e) {
 
-	@Override
-	public void onShowPress(MotionEvent e) {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public boolean onSingleTapUp(MotionEvent e) {
-		// TODO Auto-generated method stub
-		return false;
-	}
+        return super.onSingleTapConfirmed(e);
+    }
 
 }

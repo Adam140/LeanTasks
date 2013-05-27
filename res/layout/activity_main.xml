@@ -8,25 +8,13 @@
     android:paddingTop="@dimen/activity_vertical_margin"
     tools:context=".MainActivity" >
 
-    <TextView
-        android:id="@+id/text_view_new_task"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentRight="true"
-        android:layout_alignParentTop="true"
-        android:text="@string/new_task"
-        android:textAppearance="?android:attr/textAppearanceMedium" />
-
     <EditText
         android:id="@+id/edit_text_task"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentLeft="true"
-        android:layout_below="@+id/text_view_new_task"
         android:ems="10"
-        android:hint="@string/new_task_hint" >
-
+        android:hint="@string/new_task" >
     </EditText>
 
     <Button
@@ -45,8 +33,11 @@
         android:layout_alignParentLeft="true"
         android:layout_alignParentRight="true"
         android:layout_below="@+id/button_add"
+        android:paddingBottom="10dp"
+        android:paddingTop="10dp"
         android:text="@string/tasks"
         android:textAppearance="?android:attr/textAppearanceMedium" />
+
     <ListView
         android:id="@+id/list_view_tasks"
         android:layout_width="fill_parent"
@@ -54,7 +45,17 @@
         android:layout_alignLeft="@+id/text_view_tasks"
         android:layout_alignRight="@+id/text_view_tasks"
         android:layout_below="@+id/text_view_tasks"
-        android:layout_marginTop="16dp">
+        android:layout_marginTop="16dp"
+        android:focusable="false"
+        android:focusableInTouchMode="false"
+        android:longClickable="false" >
     </ListView>
+
+    <View
+        android:layout_width="fill_parent"
+        android:layout_height="1dp"
+        android:layout_alignParentLeft="true"
+        android:layout_below="@+id/text_view_tasks"
+        android:background="@color/darker_gray" />
 
 </RelativeLayout>
