@@ -40,10 +40,54 @@ public class MainActivity extends Activity{
 	private List<Task> tasks;
 	private TaskArrayAdapter taskArrayAdapter;
 
-	private Gesture g;
+//	private GestureDetector  detector = new GestureDetector (this, new Gesture());
 	
 	private Task currentTask;
 	private EditText editTextTask;
+	
+	private OnItemClickListener clickOnTask = new OnItemClickListener() {
+		@Override
+		public void onItemClick(AdapterView<?> tasks, View view, int position, long id) {
+			Task task = (Task) tasks.getItemAtPosition(position);
+			boolean checked = !task.isChecked();
+			((CheckBox) view.findViewById(R.id.task_check_box)).setChecked(checked);
+			task.setChecked(checked);
+			task.setUpdatedDate(new Date().toString());
+			table.tasks.update(task);
+		}
+	};
+	
+	private OnItemLongClickListener editOnTask = new OnItemLongClickListener() {
+		@Override
+		public boolean onItemLongClick(AdapterView<?> tasks, View view, int position, long id) {
+			currentTask= (Task) tasks.getItemAtPosition(position);
+			showDialog(DIALOG_EDIT_TASK);
+			return true;
+		}
+	};
+	
+	private DialogInterface.OnClickListener dialogButtonClick = new DialogInterface.OnClickListener() {
+		@Override
+		public void onClick(DialogInterface dialog, int which) {
+			if(which == dialog.BUTTON_POSITIVE)
+			{
+				if(currentTask != null && editTextTask != null)
+				{
+					currentTask.setText(editTextTask.getText().toString());
+					currentTask.setUpdatedDate(new Date().toString());
+					table.tasks.update(currentTask);
+				}
+			}
+		}
+	};
+	
+	private OnTouchListener deleteGesture = new OnTouchListener() {
+		@Override
+		public boolean onTouch(View v, MotionEvent event) {
+//			detector.onTouchEvent(event);
+			return false;
+		}
+	};
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -52,7 +96,6 @@ public class MainActivity extends Activity{
 		ab.setDisplayUseLogoEnabled(true);
 		ab.setDisplayShowTitleEnabled(false);
 		setContentView(R.layout.activity_main);
-		g = new Gesture(this);
 
 		table = new Table(this);
 
@@ -66,7 +109,7 @@ public class MainActivity extends Activity{
 		listTasks.setOnItemClickListener(clickOnTask);
 		listTasks.setOnItemLongClickListener(editOnTask);
 		listTasks.setAdapter(taskArrayAdapter);
-		listTasks.setOnTouchListener(g);
+		listTasks.setOnTouchListener(deleteGesture);
 		
 		taskArrayAdapter.notifyDataSetChanged();
 
@@ -117,27 +160,6 @@ public class MainActivity extends Activity{
 	    
 		return dialogBuilder.create();
 	}
-
-	private OnItemClickListener clickOnTask = new OnItemClickListener() {
-		@Override
-		public void onItemClick(AdapterView<?> tasks, View view, int position, long id) {
-			Task task = (Task) tasks.getItemAtPosition(position);
-			boolean checked = !task.isChecked();
-			((CheckBox) view.findViewById(R.id.task_check_box)).setChecked(checked);
-			task.setChecked(checked);
-			task.setUpdatedDate(new Date().toString());
-			table.tasks.update(task);
-		}
-	};
-	
-	private OnItemLongClickListener editOnTask = new OnItemLongClickListener() {
-		@Override
-		public boolean onItemLongClick(AdapterView<?> tasks, View view, int position, long id) {
-			currentTask= (Task) tasks.getItemAtPosition(position);
-			showDialog(DIALOG_EDIT_TASK);
-			return true;
-		}
-	};
 	
 	protected Dialog onCreateDialog(int id) {
 		return createCustomAlertDialog();
@@ -153,36 +175,4 @@ public class MainActivity extends Activity{
 		    editTextTask.setText(currentTask.getText());
 		}
 	}
-
-	private DialogInterface.OnClickListener dialogButtonClick = new DialogInterface.OnClickListener() {
-		@Override
-		public void onClick(DialogInterface dialog, int which) {
-			if(which == dialog.BUTTON_POSITIVE)
-			{
-				if(currentTask != null && editTextTask != null)
-				{
-					currentTask.setText(editTextTask.getText().toString());
-					currentTask.setUpdatedDate(new Date().toString());
-					table.tasks.update(currentTask);
-				}
-			}
-		}
-	};
-	
-	 @Override
-	    public boolean onTouchEvent(MotionEvent event) {
-	        // or implement in activity or component. When your not assigning to a child component.
-	        return g.getDetector().onTouchEvent(event); 
-	    }
-	
-//	private OnTouchListener deleteGesture = new OnTouchListener() {
-//		@Override
-//		public boolean onTouch(View v, MotionEvent event) {
-//			listTasks.onTouchEvent(event);
-//			detector = new GestureDetector(g);
-//			return (detector.onTouchEvent(event));
-//		}
-//	};
-
-
 }
