@@ -3,6 +3,7 @@ package com.mais.leantasks;
 import java.util.List;
 
 import android.content.Context;
+import android.graphics.Paint;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -11,7 +12,6 @@ import android.widget.CheckBox;
 import android.widget.LinearLayout;
 
 import com.mais.leantasks.model.Task;
-import com.mais.leantasks.sql.Table;
 
 public class TaskArrayAdapter extends ArrayAdapter<Task> {
 
@@ -29,7 +29,7 @@ public class TaskArrayAdapter extends ArrayAdapter<Task> {
 	    
 	    String taskText = task.getText();
 	    boolean taskChecked = task.isChecked();
-//	    boolean taskArchived = task.isArchived();
+	    boolean taskArchived = task.isArchived();
 	    if(convertView == null) {
 	        taskView = new LinearLayout(getContext());
 	        LayoutInflater inflater = 
@@ -40,10 +40,14 @@ public class TaskArrayAdapter extends ArrayAdapter<Task> {
 	        taskView = (LinearLayout)convertView;
 	    }
 	    
-	    final CheckBox taskCheckBox = (CheckBox)taskView.findViewById(R.id.task_check_box);
+	    CheckBox taskCheckBox = (CheckBox)taskView.findViewById(R.id.task_check_box);
 	    
 	    taskCheckBox.setText(taskText);
 	    taskCheckBox.setChecked(taskChecked);
+	    if(taskArchived)
+	    	taskCheckBox.setPaintFlags(taskCheckBox.getPaintFlags() | Paint.STRIKE_THRU_TEXT_FLAG);
+	    else
+	    	taskCheckBox.setPaintFlags(taskCheckBox.getPaintFlags() & (~ Paint.STRIKE_THRU_TEXT_FLAG));
 	    
 	    return taskView;
 	}

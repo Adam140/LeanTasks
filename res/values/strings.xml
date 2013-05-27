@@ -3,12 +3,12 @@
 
     <string name="app_name">LeanTasks</string>
     <string name="action_settings">Settings</string>
-<!-- Colors -->    
+<!-- Colors -->
     <color name="action_bar">#FF4444</color>
     <color name="edit_task_background">#F2F2F2</color>
+    <color name="darker_gray">#808080</color>
 <!-- Main layout -->
-    <string name="new_task">NEW TASK</string>
-    <string name="new_task_hint">Write task</string>
+    <string name="new_task">New task</string>
     <string name="tasks">TASKS</string>
     <string name="add">Add</string>
     <string name="edit_task">EDIT TASK</string>

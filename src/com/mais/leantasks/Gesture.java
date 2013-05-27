@@ -1,40 +1,63 @@
 package com.mais.leantasks;
 
-import android.content.Context;
-import android.view.GestureDetector;
+import android.graphics.Paint;
 import android.view.GestureDetector.SimpleOnGestureListener;
 import android.view.MotionEvent;
-import android.view.View;
-import android.view.View.OnTouchListener;
+import android.widget.CheckBox;
+import android.widget.ListView;
 
-public class Gesture extends SimpleOnGestureListener implements OnTouchListener
+import com.mais.leantasks.model.Task;
+import com.mais.leantasks.sql.Table;
+
+public class Gesture extends SimpleOnGestureListener
  {
-    Context context;
-    GestureDetector gDetector;
+    private Table table;
+    private ListView listView;
+    private final static int PATH_LENGHT = 200;
+    
 
     public Gesture()
     {
         super();
     }
-
-    public Gesture(Context context) {
-        this(context, null);
+    
+    public Gesture(ListView listView, Table table)
+    {
+    	super();
+    	this.table = table;
+    	this.listView = listView;
     }
-
-    public Gesture(Context context, GestureDetector gDetector) {
-
-        if(gDetector == null)
-            gDetector = new GestureDetector(context, this);
-
-        this.context = context;
-        this.gDetector = gDetector;
-    }
-
 
     @Override
     public boolean onFling(MotionEvent e1, MotionEvent e2, float velocityX, float velocityY) {
-    	if(Math.abs(e2.getX() - e1.getX()) > 100)
-			System.out.println("JUPI");
+    	if(Math.abs(e2.getX() - e1.getX()) > PATH_LENGHT){
+    		int id = listView.pointToPosition((int) e1.getX(), (int) e1.getY());
+    		if(id != -1)
+    		{
+    			Task task = (Task)listView.getItemAtPosition(id);
+	    		CheckBox checkBox = (CheckBox) listView.getChildAt(id).findViewById(R.id.task_check_box);
+	    		boolean archived = task.isArchived();
+	    		
+	    		if(archived)
+	    		{
+	    			checkBox.setPaintFlags(checkBox.getPaintFlags() & (~ Paint.STRIKE_THRU_TEXT_FLAG));
+	    		}
+	    		else
+	    		{
+	    			checkBox.setPaintFlags(checkBox.getPaintFlags() | Paint.STRIKE_THRU_TEXT_FLAG);
+	    		}
+	    		
+	    		task.setArchived(!archived);
+	    		table.tasks.update(task);
+	    		
+//	    		TaskArrayAdapter adapter = (TaskArrayAdapter) listView.getAdapter();
+//	    		table.tasks.delete((Task) task);
+//	    		adapter.remove(task);
+	    		
+	    		return true;
+    		}
+    		
+    	}
         return super.onFling(e1, e2, velocityX, velocityY);
     }
 
@@ -43,31 +66,5 @@ public class Gesture extends SimpleOnGestureListener implements OnTouchListener
 
         return super.onSingleTapConfirmed(e);
     }
-
-
-
-
-
-    public boolean onTouch(View v, MotionEvent event) {
-
-        // Within the MyGestureListener class you can now manage the event.getAction() codes.
-
-        // Note that we are now calling the gesture Detectors onTouchEvent. And given we've set this class as the GestureDetectors listener 
-        // the onFling, onSingleTap etc methods will be executed.
-        return gDetector.onTouchEvent(event);
-    }
-
-
-    public GestureDetector getDetector()
-    {
-        return gDetector;
-    }       
-//	@Override
-//	public boolean onScroll(MotionEvent e1, MotionEvent e2, float distanceX, float distanceY) {
-//		if(Math.abs(e2.getX() - e1.getX()) > 100)
-//			System.out.println("JUPI");
-//		// TODO Auto-generated method stub
-//		return false;
-//	}
 
 }
