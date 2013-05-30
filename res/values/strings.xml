@@ -22,4 +22,8 @@
     <string name="createAccount">Create a new account</string>
     <string name="login">Login</string>
     <string name="password">Password</string>
+<!-- Registration text info -->
+    <string name="empty_field">Some field is empty</string>
+    <string name="not_available_login">Login is not available</string>
+    <string name="service_problem">There is some problem with service, try later</string>
 </resources>

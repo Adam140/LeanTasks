@@ -59,7 +59,7 @@ public class MainActivity extends Activity implements SensorListener {
 		ab.setDisplayShowTitleEnabled(false);
 		setContentView(R.layout.activity_main);
 
-		table = new Table(this);
+		table = Table.getInstance(this);
 
 		tasks = table.tasks.selectAll();
 
