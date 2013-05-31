@@ -5,6 +5,8 @@ public class User {
 	private long id;
 	private String name;
 	private String password;
+	private boolean loggedIn;
+	private String lastSync;
 	
 	public long getId() {
 		return id;
@@ -25,9 +27,29 @@ public class User {
 		this.password = password;
 	}
 	
+	public int getLoggedInInt() {
+		if (loggedIn)
+			return 1;
+		else
+			return 0;
+	}
+	
+	public boolean isLoggedIn() {
+		return loggedIn;
+	}
+	public void setLoggedIn(int loggedIn) {
+		this.loggedIn = loggedIn == 1 ? true : false;;
+	}
+	public String getLastSync() {
+		return lastSync;
+	}
+	public void setLastSync(String lastSync) {
+		this.lastSync = lastSync ;
+	}
+	
 	@Override
 	public String toString() {
-		return "User [id=" + id + ", name=" + name + ", password=" + password
-				+ "]";
+		return "User [id=" + id + ", name=" + name + ", password=" + password + ", loggedIn=" + loggedIn + ", lastSync=" + lastSync + "]";
 	}
+
 }

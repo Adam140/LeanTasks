@@ -22,7 +22,7 @@ public class Users implements CRUD{
 			
 	private SQLiteDatabase database;
 	
-	private String[] allColumns = { DBHelper.USR_ID, DBHelper.USR_NAME, DBHelper.USR_PASSWORD};
+	private String[] allColumns = { DBHelper.USR_ID, DBHelper.USR_NAME, DBHelper.USR_PASSWORD, DBHelper.USR_LOGGED_IN, DBHelper.USR_LAST_SYNC_DATE};
 
 	public Users(SQLiteDatabase database)
 	{
@@ -39,6 +39,8 @@ public class Users implements CRUD{
 		ContentValues values = new ContentValues();
 		values.put(DBHelper.USR_NAME, user.getName());
 		values.put(DBHelper.USR_PASSWORD, user.getPassword());
+		values.put(DBHelper.USR_LOGGED_IN, user.getLoggedInInt());
+		values.put(DBHelper.USR_LAST_SYNC_DATE, user.getLastSync());
 
 		long insertId = database.insert(DBHelper.TABLE_USERS, null, values);
 		user.setId(insertId);
@@ -82,6 +84,8 @@ public class Users implements CRUD{
 		ContentValues values = new ContentValues();
 		values.put(DBHelper.USR_NAME, user.getName());
 		values.put(DBHelper.USR_PASSWORD, user.getPassword());
+		values.put(DBHelper.USR_LOGGED_IN, user.getLoggedInInt());
+		values.put(DBHelper.USR_LAST_SYNC_DATE, user.getLastSync());
 
 		database.update(DBHelper.TABLE_USERS, values, DBHelper.USR_ID + " = "
 				+ user.getId(), null);
@@ -174,6 +178,8 @@ public class Users implements CRUD{
 		User.setId(cursor.getLong(0));
 		User.setName(cursor.getString(1));
 		User.setPassword(cursor.getString(2));
+		User.setLoggedIn(cursor.getInt(3));
+		User.setLastSync(cursor.getString(4));
 		return User;
 	}
 }

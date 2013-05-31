@@ -51,7 +51,7 @@ public class MainActivity extends Activity {
 		ab.setDisplayShowTitleEnabled(false);
 		setContentView(R.layout.activity_main);
 
-		table = new Table(this);
+		table = Table.getInstance(this);
 		tasks = table.tasks.selectAll();
 		listView = (ListView) findViewById(R.id.list_view_tasks);
 		
