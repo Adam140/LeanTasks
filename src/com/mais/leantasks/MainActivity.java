@@ -7,34 +7,19 @@ import java.util.List;
 import android.annotation.SuppressLint;
 import android.app.ActionBar;
 import android.app.Activity;
-import android.app.AlertDialog;
-import android.app.Dialog;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.os.Bundle;
-import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.View;
-import android.view.ViewGroup;
 import android.view.inputmethod.InputMethodManager;
-import android.widget.AbsListView;
-import android.widget.AdapterView;
-import android.widget.AdapterView.OnItemClickListener;
-import android.widget.AdapterView.OnItemLongClickListener;
-import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.ListView;
 
 import com.mais.leantasks.model.Task;
 import com.mais.leantasks.sql.Table;
 
-import de.timroes.swipetodismiss.SwipeDismissList;
-import de.timroes.swipetodismiss.SwipeDismissList.UndoMode;
-import de.timroes.swipetodismiss.SwipeDismissList.Undoable;
-
 public class MainActivity extends Activity {
 
-	static final private int DIALOG_EDIT_TASK = 0;
 	private Table table;
 	private ListView listView;
 	private List<Task> tasks;
@@ -64,39 +49,6 @@ public class MainActivity extends Activity {
 		listView.setAdapter(taskArrayAdapter);
 
 		taskArrayAdapter.notifyDataSetChanged();
-		
-		SwipeDismissList.OnDismissCallback callback = new SwipeDismissList.OnDismissCallback() {
-		    // Gets called whenever the user deletes an item.
-		    public SwipeDismissList.Undoable onDismiss(AbsListView listView, final int position) {
-		        // Get your item from the adapter (mAdapter being an adapter for MyItem objects)
-		        final Task deletedItem = taskArrayAdapter.getItem(position);
-		        // Delete item from adapter
-		        taskArrayAdapter.remove(deletedItem);
-		        // Return an Undoable implementing every method
-		        return new SwipeDismissList.Undoable() {
-
-		            // Method is called when user undoes this deletion
-		            public void undo() {
-		                // Reinsert item to list
-		            	taskArrayAdapter.insert(deletedItem, position);
-		            }
-
-		            // Return an undo message for that item
-		            public String getTitle() {
-		                return deletedItem.toString() + " deleted";
-		            }
-
-		            // Called when user cannot undo the action anymore
-		            public void discard() {
-		                // Use this place to e.g. delete the item from database
-		                //finallyDeleteFromSomeStorage(deletedItem);
-		            }
-		        };
-		    }
-		};
-		
-		UndoMode mode = UndoMode.SINGLE_UNDO;
-		SwipeDismissList swipeList = new SwipeDismissList(listView, callback, mode);
 
 	}
 
