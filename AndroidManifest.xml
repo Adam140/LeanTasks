@@ -4,24 +4,28 @@
     android:versionName="1.0" xmlns:android="http://schemas.android.com/apk/res/android">
 
     <uses-sdk
-        android:minSdkVersion="11"
-        android:targetSdkVersion="14" />
+        android:minSdkVersion="14"
+        android:targetSdkVersion="17" />
+   
+   <uses-permission android:name="android.permission.INTERNET" /> 
+   <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" /> 
     
     <application
         android:allowBackup="true"
         android:theme="@style/AppTheme"
-        android:icon="@drawable/ic_logo_sq"
+        android:icon="@drawable/ic_launcher"
         android:logo="@drawable/ic_logo">
         <activity
             android:name="com.mais.leantasks.AccountManagement"
-            android:label="@string/app_name" >
+            android:label="@string/app_name" 
+            android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name="com.mais.leantasks.CreateAccount"></activity>
-        <activity android:name="com.mais.leantasks.MainActivity"></activity>
+        <activity android:name="com.mais.leantasks.CreateAccount" android:screenOrientation="portrait"></activity>
+        <activity android:name="com.mais.leantasks.MainActivity" android:screenOrientation="portrait"></activity>
     </application>
 </manifest>

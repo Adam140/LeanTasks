@@ -1,10 +1,75 @@
-<CheckBox xmlns:android="http://schemas.android.com/apk/res/android"
-    android:id="@+id/task_check_box"
-    android:layout_width="fill_parent"
+<?xml version="1.0" encoding="UTF-8"?>
+<LinearLayout android:id="@+id/task_view" xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:focusable="false"
-    android:focusableInTouchMode="false"
-    android:clickable="false"
-    android:textSize="20sp" >
+    android:orientation="horizontal"
+    android:showDividers="middle"
+    android:divider="?android:dividerVertical"
+    android:dividerPadding="8dp"
+    android:baselineAligned="false">
+    
+    <CheckBox android:id="@+id/task_check_box"
+        android:button="@drawable/btn_check"
+    	android:layout_width="wrap_content"
+    	android:layout_height="wrap_content"
+    	android:focusable="false"
+    	android:focusableInTouchMode="false"
+    	android:clickable="true"
+    	android:textSize="20sp"
+    	android:paddingLeft="8dp"
+     	android:paddingRight="0dp"
+    	android:paddingTop="16dp"
+    	android:paddingBottom="16dp"
+    	android:layout_gravity="left" >
+	</CheckBox>
+	
+<!--     <TextView
+        android:id="@+id/task_show_text"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@null"
+     	android:paddingLeft="12dp"
+     	android:paddingRight="12dp"
+     	android:paddingTop="16dp"
+     	android:paddingBottom="12dp"
+     	android:singleLine="true"
+     	style="?android:textAppearanceListItemSmall"/> -->
 
-</CheckBox>
+	<EditText
+        android:id="@+id/task_edit_text"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:background="@null"
+     	android:inputType="text"
+     	android:paddingLeft="12dp"
+     	android:paddingRight="12dp"
+     	android:paddingTop="16dp"
+     	android:paddingBottom="12dp"
+     	android:singleLine="true"
+     	style="?android:textAppearanceListItemSmall"/>
+	
+	<ImageButton
+        android:id="@+id/button_remove"
+        style="?android:borderlessButtonStyle"
+        android:layout_width="48dp"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_vertical"
+        android:src="@drawable/ic_action_remove"
+        android:onClick="onClick" 
+        android:background="@drawable/btn_transparent"
+        android:contentDescription="@string/remove"/>
+	
+	<ImageButton
+        android:id="@+id/button_confirm"
+        style="?android:borderlessButtonStyle"
+        android:layout_width="48dp"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_vertical"
+        android:src="@drawable/ic_action_confirm"
+        android:onClick="onClick" 
+        android:background="@drawable/btn_transparent"
+        android:visibility="gone"
+        android:contentDescription="@string/confirm"/>
+	
+</LinearLayout>

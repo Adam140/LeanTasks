@@ -31,6 +31,8 @@ public class DBHelper extends SQLiteOpenHelper {
 	public static final String USR_ID = "usr_ID";
 	public static final String USR_NAME = "usr_name";
 	public static final String USR_PASSWORD = "usr_password";
+	public static final String USR_LOGGED_IN = "usr_logged_in";
+	public static final String USR_LAST_SYNC_DATE = "usr_last_sync_date";
 
 	public DBHelper(Context context) {
 		super(context, DATABASE_NAME, null, DATABASE_VERSION);
@@ -53,7 +55,9 @@ public class DBHelper extends SQLiteOpenHelper {
 		String CREATE_USERS_TABLE = "CREATE TABLE " + TABLE_USERS + "("
 				+ USR_ID + " INTEGER PRIMARY KEY,"
 				+ USR_NAME + " TEXT,"
-				+ USR_PASSWORD + " TEXT)";
+				+ USR_PASSWORD + " TEXT," 
+				+ USR_LOGGED_IN + " INTEGER,"
+				+ USR_LAST_SYNC_DATE + " TEXT)";
 		db.execSQL(CREATE_USERS_TABLE);
 		}
 		catch(SQLException e)

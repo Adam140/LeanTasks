@@ -57,7 +57,7 @@
         android:text="@string/password"
         android:textAppearance="?android:attr/textAppearanceLarge" />
 
-    <EditText
+    <TextView
         android:id="@+id/editTextInfo"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -65,5 +65,15 @@
         android:layout_centerHorizontal="true"
         android:layout_marginTop="29dp"
         android:ems="10" />
+
+    <ProgressBar
+        android:id="@+id/progressBar"
+        style="?android:attr/progressBarStyleLarge"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_alignRight="@+id/textViewLogin"
+        android:layout_marginBottom="14dp"
+        android:visibility="invisible" />
     
 </RelativeLayout>

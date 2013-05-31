@@ -11,10 +11,11 @@ public final class R {
     public static final class attr {
     }
     public static final class color {
-        /**  Colors 
-         */
-        public static final int action_bar=0x7f060000;
-        public static final int edit_task_background=0x7f060001;
+        public static final int action_bar=0x7f040000;
+        public static final int darker_gray=0x7f040002;
+        public static final int defaultColor=0x7f040004;
+        public static final int edit_task_background=0x7f040001;
+        public static final int pressed=0x7f040003;
     }
     public static final class dimen {
         /**  Default screen margins, per the Android Design guidelines. 
@@ -23,23 +24,48 @@ public final class R {
          screen margins) for sw720dp devices (e.g. 10" tablets) in landscape here.
     
          */
-        public static final int activity_horizontal_margin=0x7f040000;
-        public static final int activity_vertical_margin=0x7f040001;
+        public static final int activity_horizontal_margin=0x7f050000;
+        public static final int activity_vertical_margin=0x7f050001;
     }
     public static final class drawable {
-        public static final int ic_launcher=0x7f020000;
-        public static final int ic_logo=0x7f020001;
-        public static final int ic_logo_sq=0x7f020002;
+        public static final int btn_check=0x7f020000;
+        public static final int btn_check_off_disabled_focused_holo_light=0x7f020001;
+        public static final int btn_check_off_disabled_holo_light=0x7f020002;
+        public static final int btn_check_off_focused_holo_light=0x7f020003;
+        public static final int btn_check_off_holo_light=0x7f020004;
+        public static final int btn_check_off_pressed_holo_light=0x7f020005;
+        public static final int btn_check_on_disabled_focused_holo_light=0x7f020006;
+        public static final int btn_check_on_disabled_holo_light=0x7f020007;
+        public static final int btn_check_on_focused_holo_light=0x7f020008;
+        public static final int btn_check_on_holo_light=0x7f020009;
+        public static final int btn_check_on_pressed_holo_light=0x7f02000a;
+        public static final int btn_transparent=0x7f02000b;
+        public static final int edit_text=0x7f02000c;
+        public static final int ic_action_add=0x7f02000d;
+        public static final int ic_action_confirm=0x7f02000e;
+        public static final int ic_action_refresh=0x7f02000f;
+        public static final int ic_action_remove=0x7f020010;
+        public static final int ic_launcher=0x7f020011;
+        public static final int ic_logo=0x7f020012;
+        public static final int ic_logo_sq=0x7f020013;
+        public static final int textfield_activated_holo_light=0x7f020014;
+        public static final int textfield_default_holo_light=0x7f020015;
+        public static final int textfield_disabled_focused_holo_light=0x7f020016;
+        public static final int textfield_disabled_holo_light=0x7f020017;
+        public static final int textfield_focused_holo_light=0x7f020018;
     }
     public static final class id {
-        public static final int action_help=0x7f090012;
-        public static final int action_logout=0x7f090010;
-        public static final int action_rate=0x7f090013;
-        public static final int action_settings=0x7f090011;
+        public static final int action_help=0x7f090018;
+        public static final int action_logout=0x7f090016;
+        public static final int action_rate=0x7f090019;
+        public static final int action_settings=0x7f090017;
+        public static final int action_sync=0x7f090015;
         public static final int buttonCreateAccount=0x7f090007;
         public static final int buttonLogin=0x7f090005;
         public static final int button_add=0x7f09000a;
+        public static final int button_confirm=0x7f090014;
         public static final int button_createAccount=0x7f090001;
+        public static final int button_remove=0x7f090013;
         public static final int dialog_edit_task=0x7f09000d;
         public static final int editTextInfo=0x7f090006;
         public static final int editTextLogin=0x7f090002;
@@ -47,10 +73,13 @@ public final class R {
         public static final int edit_task_field=0x7f09000e;
         public static final int edit_text_task=0x7f090009;
         public static final int list_view_tasks=0x7f09000c;
-        public static final int task_check_box=0x7f09000f;
+        public static final int progressBar=0x7f090008;
+        public static final int task_check_box=0x7f090011;
+        public static final int task_edit_text=0x7f090012;
+        public static final int task_view=0x7f090010;
         public static final int textViewLogin=0x7f090000;
         public static final int textViewPassword=0x7f090003;
-        public static final int text_view_new_task=0x7f090008;
+        public static final int text_view_new_task=0x7f09000f;
         public static final int text_view_tasks=0x7f09000b;
     }
     public static final class layout {
@@ -64,26 +93,33 @@ public final class R {
         public static final int main=0x7f080000;
     }
     public static final class string {
-        public static final int action_settings=0x7f050001;
-        public static final int add=0x7f050005;
-        public static final int app_name=0x7f050000;
-        public static final int cancel=0x7f050008;
-        public static final int createAccount=0x7f05000d;
-        public static final int edit_task=0x7f050006;
-        public static final int help=0x7f05000b;
-        public static final int login=0x7f05000e;
-        /**  Menu part 
+        public static final int action_settings=0x7f060001;
+        public static final int add=0x7f060004;
+        public static final int app_name=0x7f060000;
+        public static final int cancel=0x7f060007;
+        public static final int confirm=0x7f060009;
+        public static final int createAccount=0x7f06000f;
+        public static final int edit_task=0x7f060005;
+        /**  Registration text info 
          */
-        public static final int logout=0x7f050009;
-        public static final int modify=0x7f050007;
+        public static final int empty_field=0x7f060012;
+        public static final int help=0x7f06000d;
+        public static final int login=0x7f060010;
+        public static final int logout=0x7f06000b;
+        public static final int modify=0x7f060006;
         /**  Main layout 
          */
-        public static final int new_task=0x7f050002;
-        public static final int new_task_hint=0x7f050003;
-        public static final int password=0x7f05000f;
-        public static final int rate_the_app=0x7f05000c;
-        public static final int settings=0x7f05000a;
-        public static final int tasks=0x7f050004;
+        public static final int new_task=0x7f060002;
+        public static final int not_available_login=0x7f060013;
+        public static final int password=0x7f060011;
+        public static final int rate_the_app=0x7f06000e;
+        public static final int remove=0x7f060008;
+        public static final int service_problem=0x7f060014;
+        public static final int settings=0x7f06000c;
+        /**  Menu part 
+         */
+        public static final int sync=0x7f06000a;
+        public static final int tasks=0x7f060003;
     }
     public static final class style {
         /** 
