@@ -13,30 +13,36 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentLeft="true"
-        android:ems="10"
-        android:hint="@string/new_task" >
-    </EditText>
+        android:ems="11"
+        android:singleLine="true"
+        android:hint="@string/new_task"
+        android:background="@drawable/edit_text" />
 
-    <Button
+    <ImageButton
         android:id="@+id/button_add"
-        android:layout_width="wrap_content"
+        style="?android:borderlessButtonStyle"
+        android:layout_width="48dp"
         android:layout_height="wrap_content"
         android:layout_alignParentRight="true"
         android:layout_alignTop="@+id/edit_text_task"
-        android:onClick="onClick"
-        android:text="@string/add" />
+        android:src="@drawable/ic_action_add"
+        android:onClick="onClick" 
+        android:background="@drawable/btn_transparent"
+        android:contentDescription="@string/add"/>
+        <!-- 
+        
+        android:text="@string/add" /> -->
+        
 
     <TextView
         android:id="@+id/text_view_tasks"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentLeft="true"
         android:layout_alignParentRight="true"
         android:layout_below="@+id/button_add"
-        android:paddingBottom="10dp"
-        android:paddingTop="10dp"
         android:text="@string/tasks"
-        android:textAppearance="?android:attr/textAppearanceMedium" />
+        style="?android:listSeparatorTextViewStyle"/>
 
     <ListView
         android:id="@+id/list_view_tasks"
@@ -44,18 +50,7 @@
         android:layout_height="wrap_content"
         android:layout_alignLeft="@+id/text_view_tasks"
         android:layout_alignRight="@+id/text_view_tasks"
-        android:layout_below="@+id/text_view_tasks"
-        android:layout_marginTop="16dp"
-        android:focusable="false"
-        android:focusableInTouchMode="false"
-        android:longClickable="false" >
+        android:layout_below="@+id/text_view_tasks">
     </ListView>
-
-    <View
-        android:layout_width="fill_parent"
-        android:layout_height="1dp"
-        android:layout_alignParentLeft="true"
-        android:layout_below="@+id/text_view_tasks"
-        android:background="@color/darker_gray" />
 
 </RelativeLayout>
