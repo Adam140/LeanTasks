@@ -4,26 +4,19 @@ import java.util.List;
 import java.util.logging.Logger;
 
 import android.content.Context;
-import android.graphics.Paint;
-import android.opengl.Visibility;
 import android.text.Editable;
 import android.text.Html;
 import android.text.Spanned;
-import android.text.TextWatcher;
-import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.View.OnFocusChangeListener;
 import android.view.ViewGroup;
-import android.view.inputmethod.EditorInfo;
 import android.widget.ArrayAdapter;
 import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
-import android.widget.TextView;
-import android.widget.TextView.OnEditorActionListener;
 
 import com.mais.leantasks.model.Task;
 import com.mais.leantasks.sql.Table;
@@ -64,10 +57,9 @@ public class TaskArrayAdapter extends ArrayAdapter<Task> {
 	    
 	    final EditText editText = (EditText)taskView.findViewById(R.id.task_edit_text);
 	    editText.setText(formatTaskText(taskText));
-	    final ImageButton removeButton = (ImageButton) taskView.findViewById(R.id.button_remove);
-	    removeButton.setOnClickListener(new OnTaskDeleteListener(this, task));
-	    
-	    final ImageButton confirmButton = (ImageButton) taskView.findViewById(R.id.button_confirm);
+	    final ImageButton taskButton = (ImageButton) taskView.findViewById(R.id.task_button);
+	    taskButton.setTag(R.drawable.ic_action_remove);
+	    taskButton.setOnClickListener(new OnTaskDeleteListener(this, task, editText));
 	    
 	    editText.setOnFocusChangeListener(new OnFocusChangeListener() {
 			
@@ -78,13 +70,13 @@ public class TaskArrayAdapter extends ArrayAdapter<Task> {
 					Editable htmlText = focusedEditText.getText();
 					String newText = Html.fromHtml(htmlText.toString()).toString();
 					focusedEditText.setText(newText);
-					removeButton.setVisibility(View.GONE);
-		            confirmButton.setVisibility(View.VISIBLE);
+					taskButton.setImageResource(R.drawable.ic_action_confirm);
+					taskButton.setTag(R.drawable.ic_action_confirm);
 		            log.info("remove removed");
 				} else {
 					log.info("confirm removed");
-					removeButton.setVisibility(View.VISIBLE);
-		            confirmButton.setVisibility(View.GONE);
+					taskButton.setImageResource(R.drawable.ic_action_remove);
+					taskButton.setTag(R.drawable.ic_action_remove);
 				}
 			}
 		});
@@ -191,17 +183,29 @@ public class TaskArrayAdapter extends ArrayAdapter<Task> {
 
 		private TaskArrayAdapter adapter;
 		private Task task;
+		private EditText editText;
 		
-		public OnTaskDeleteListener(TaskArrayAdapter adapter, Task task){
+		public OnTaskDeleteListener(TaskArrayAdapter adapter, Task task, EditText editText){
 			this.task = task;
 			this.adapter = adapter;
+			this.editText = editText;
 		}
 		
 		@Override
 		public void onClick(View v) {
-			Table.getInstance(v.getContext()).tasks.delete(task);
-			adapter.remove(task);
-			adapter.notifyDataSetChanged();
+			ImageButton button = (ImageButton) v;
+			if( ((Integer) button.getTag()) == R.drawable.ic_action_remove)
+			{				
+				Table.getInstance(v.getContext()).tasks.delete(task);
+				adapter.remove(task);
+				adapter.notifyDataSetChanged();
+			}
+			else if(((Integer) button.getTag()) == R.drawable.ic_action_confirm)
+			{
+				task.setText(editText.getText().toString());
+				adapter.notifyDataSetChanged();
+				Table.getInstance(v.getContext()).tasks.update(task);
+			}
 		}
 		
 	}
