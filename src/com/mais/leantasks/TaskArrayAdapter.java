@@ -58,6 +58,7 @@ public class TaskArrayAdapter extends ArrayAdapter<Task> {
 	    final EditText editText = (EditText)taskView.findViewById(R.id.task_edit_text);
 	    editText.setText(formatTaskText(taskText));
 	    final ImageButton taskButton = (ImageButton) taskView.findViewById(R.id.task_button);
+	    taskButton.setTag(R.drawable.ic_action_remove);
 	    taskButton.setOnClickListener(new OnTaskDeleteListener(this, task, editText));
 	    
 	    editText.setOnFocusChangeListener(new OnFocusChangeListener() {
