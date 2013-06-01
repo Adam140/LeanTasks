@@ -52,5 +52,5 @@
         android:layout_alignRight="@+id/text_view_tasks"
         android:layout_below="@+id/text_view_tasks">
     </ListView>
-
+    
 </RelativeLayout>

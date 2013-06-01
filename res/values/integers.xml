@@ -1,0 +1,3 @@
+<resources>
+    <integer name="crouton_hide_delay">2000</integer>
+</resources>
