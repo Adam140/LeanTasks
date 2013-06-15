@@ -8,9 +8,12 @@ import android.annotation.SuppressLint;
 import android.app.ActionBar;
 import android.app.Activity;
 import android.content.Context;
+import android.content.res.Configuration;
 import android.os.Bundle;
+import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.View;
+import android.view.ViewTreeObserver.OnGlobalLayoutListener;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 import android.widget.ListView;
@@ -28,9 +31,6 @@ public class MainActivity extends Activity {
 	private List<Task> tasks;
 	private TaskArrayAdapter taskArrayAdapter;
 	private ProgressBar progressBar;
-
-	private Task currentTask;
-	private EditText editTextTask;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -56,7 +56,7 @@ public class MainActivity extends Activity {
 		listView.setAdapter(taskArrayAdapter);
 
 		taskArrayAdapter.notifyDataSetChanged();
-
+		
 	}
 
 	@Override
@@ -176,5 +176,5 @@ public class MainActivity extends Activity {
 //			}
 //		}
 //	};
-
+	
 }
