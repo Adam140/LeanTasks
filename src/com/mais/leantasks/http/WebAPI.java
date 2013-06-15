@@ -1,5 +1,8 @@
 package com.mais.leantasks.http;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
 import org.apache.http.client.HttpClient;
@@ -9,6 +12,8 @@ import org.apache.http.entity.StringEntity;
 import org.apache.http.impl.client.DefaultHttpClient;
 import org.apache.http.util.EntityUtils;
 import org.json.JSONObject;
+
+import com.mais.leantasks.model.Task;
 
 public class WebAPI {
 	static final String ADRESS = "http://app-serviceleantasks.rhcloud.com/";
@@ -80,6 +85,26 @@ public class WebAPI {
 			return true;
 		else
 			return false;
+	}
+	
+	/**
+	 * 
+	 * @param login
+	 * @param hash
+	 * @param date
+	 * @return List of the tasks obtained from the webservice.
+	 */
+	public static List<Task> getAllTasks(String login, String hash, String date) throws Exception {
+		
+		String URL = GET_ALL + login + "/" + hash + "/" + date;
+		
+		HttpClient client = new DefaultHttpClient();
+		HttpGet get = new HttpGet(URL);
+		HttpResponse responseGet = client.execute(get);
+		HttpEntity resEntityGet = responseGet.getEntity();
+		
+		
+		return new ArrayList<Task>();
 	}
 
 }

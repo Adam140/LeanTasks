@@ -52,5 +52,15 @@
         android:layout_alignRight="@+id/text_view_tasks"
         android:layout_below="@+id/text_view_tasks">
     </ListView>
+    
+    <ProgressBar
+        android:id="@+id/progressBar"
+        style="?android:attr/progressBarStyleLarge"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_alignRight="@+id/textViewLogin"
+        android:layout_marginBottom="14dp"
+        android:visibility="invisible" />
 
 </RelativeLayout>

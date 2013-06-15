@@ -14,8 +14,11 @@ import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 import android.widget.ListView;
+import android.widget.ProgressBar;
 
+import com.mais.leantasks.asyncTask.GetTasksTask;
 import com.mais.leantasks.model.Task;
+import com.mais.leantasks.security.Encrypt;
 import com.mais.leantasks.sql.Table;
 
 public class MainActivity extends Activity {
@@ -24,6 +27,7 @@ public class MainActivity extends Activity {
 	private ListView listView;
 	private List<Task> tasks;
 	private TaskArrayAdapter taskArrayAdapter;
+	private ProgressBar progressBar;
 
 	private Task currentTask;
 	private EditText editTextTask;
@@ -36,6 +40,9 @@ public class MainActivity extends Activity {
 		ab.setDisplayShowTitleEnabled(false);
 		setContentView(R.layout.activity_main);
 
+		// won't need to be called every time
+//		getNewTasksFromWS();
+		
 		table = Table.getInstance(this);
 		tasks = table.tasks.selectAll();
 		listView = (ListView) findViewById(R.id.list_view_tasks);
@@ -91,6 +98,28 @@ public class MainActivity extends Activity {
 
 			break;
 		}
+	}
+	
+	/**
+	 * This function will be used to invoke task retrieval from the cloud.
+	 * TODO Use real user data and store tasks in the DB.
+	 */
+	public void getNewTasksFromWS() {
+		
+		progressBar = (ProgressBar)findViewById(R.id.progressBar);
+		
+		table = Table.getInstance(this);
+		
+		// mock data for testing purposes
+		String name = "admin";
+		String pass = Encrypt.md5("admin");
+		String date = "2013-06-01-12-00";
+		
+		GetTasksTask getTasks = new GetTasksTask(progressBar, this);
+		getTasks.execute(name, pass, date);
+		
+		tasks = getTasks.getTasks();
+		
 	}
 
 //	/**
