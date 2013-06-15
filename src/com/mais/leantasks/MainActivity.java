@@ -8,9 +8,12 @@ import android.annotation.SuppressLint;
 import android.app.ActionBar;
 import android.app.Activity;
 import android.content.Context;
+import android.content.res.Configuration;
 import android.os.Bundle;
+import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.View;
+import android.view.ViewTreeObserver.OnGlobalLayoutListener;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 import android.widget.ListView;
@@ -24,9 +27,8 @@ public class MainActivity extends Activity {
 	private ListView listView;
 	private List<Task> tasks;
 	private TaskArrayAdapter taskArrayAdapter;
-
-	private Task currentTask;
-	private EditText editTextTask;
+	private EditText newTask;
+	private int lastHeight; // some cheat
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -36,6 +38,7 @@ public class MainActivity extends Activity {
 		ab.setDisplayShowTitleEnabled(false);
 		setContentView(R.layout.activity_main);
 
+		newTask = (EditText) findViewById(R.id.edit_text_task);
 		table = Table.getInstance(this);
 		tasks = table.tasks.selectAll();
 		listView = (ListView) findViewById(R.id.list_view_tasks);
@@ -49,6 +52,21 @@ public class MainActivity extends Activity {
 		listView.setAdapter(taskArrayAdapter);
 
 		taskArrayAdapter.notifyDataSetChanged();
+		
+		final View activityRootView = findViewById(R.id.main_layout);
+		lastHeight = activityRootView.getHeight();
+		activityRootView.getViewTreeObserver().addOnGlobalLayoutListener(new OnGlobalLayoutListener() {
+		    @Override
+		    public void onGlobalLayout() {
+//		        int heightDiff = activityRootView.getRootView().getHeight() - activityRootView.getHeight();
+		        int height = activityRootView.getHeight();
+		        if (lastHeight - height > 300) { // if more than 300 pixels, its probably a keyboard...
+		        	System.out.println("KEYBORD");
+	        		newTask.requestFocus();
+//	        		lastHeight = height;
+		        }
+		     }
+		});
 
 	}
 
@@ -147,5 +165,5 @@ public class MainActivity extends Activity {
 //			}
 //		}
 //	};
-
+	
 }
