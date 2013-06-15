@@ -27,8 +27,6 @@ public class MainActivity extends Activity {
 	private ListView listView;
 	private List<Task> tasks;
 	private TaskArrayAdapter taskArrayAdapter;
-	private EditText newTask;
-	private int lastHeight; // some cheat
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -38,7 +36,6 @@ public class MainActivity extends Activity {
 		ab.setDisplayShowTitleEnabled(false);
 		setContentView(R.layout.activity_main);
 
-		newTask = (EditText) findViewById(R.id.edit_text_task);
 		table = Table.getInstance(this);
 		tasks = table.tasks.selectAll();
 		listView = (ListView) findViewById(R.id.list_view_tasks);
@@ -53,21 +50,6 @@ public class MainActivity extends Activity {
 
 		taskArrayAdapter.notifyDataSetChanged();
 		
-		final View activityRootView = findViewById(R.id.main_layout);
-		lastHeight = activityRootView.getHeight();
-		activityRootView.getViewTreeObserver().addOnGlobalLayoutListener(new OnGlobalLayoutListener() {
-		    @Override
-		    public void onGlobalLayout() {
-//		        int heightDiff = activityRootView.getRootView().getHeight() - activityRootView.getHeight();
-		        int height = activityRootView.getHeight();
-		        if (lastHeight - height > 300) { // if more than 300 pixels, its probably a keyboard...
-		        	System.out.println("KEYBORD");
-	        		newTask.requestFocus();
-//	        		lastHeight = height;
-		        }
-		     }
-		});
-
 	}
 
 	@Override

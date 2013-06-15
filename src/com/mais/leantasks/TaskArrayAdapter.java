@@ -58,15 +58,6 @@ public class TaskArrayAdapter extends ArrayAdapter<Task> {
 	@Override
 	public View getView(int position, View convertView, final ViewGroup parent) {
 
-		LinearLayout taskView;
-
-		// if (convertView == null) {
-		// taskView = new LinearLayout(getContext());
-		// inflater.inflate(resource, taskView, true);
-		// } else {
-		// taskView = (LinearLayout) convertView;
-		// }
-
 		View v = convertView;
 		if (v == null) {
 			LayoutInflater vi = (LayoutInflater) getContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
