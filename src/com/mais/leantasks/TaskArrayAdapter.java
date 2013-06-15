@@ -44,7 +44,6 @@ public class TaskArrayAdapter extends ArrayAdapter<Task> {
 
 			holder.taskCheckBox.setChecked(taskChecked);
 			holder.taskCheckBox.setOnClickListener(new OnTaskCheckListener(this, task));
-			holder.time = new Date().getTime();
 
 			holder.editText = (EditText) v.findViewById(R.id.task_edit_text);
 			holder.editText.setText(formatTaskText(taskText));
@@ -255,13 +254,7 @@ public class TaskArrayAdapter extends ArrayAdapter<Task> {
 		}
 		@Override
 		public void onFocusChange(View v, boolean hasFocus) {
-			long time = new Date().getTime();
-			System.out.println(time - holder.time);
-			if(time - holder.time < 1000)
-				return;
-			
 			if (hasFocus) {
-				holder.time = time;
 				Editable htmlText = holder.editText.getText();
 				String newText = Html.fromHtml(htmlText.toString()).toString();
 				holder.editText.setText(newText);
@@ -269,7 +262,6 @@ public class TaskArrayAdapter extends ArrayAdapter<Task> {
 				holder.taskButton.setTag(R.drawable.ic_action_confirm);
 				log.info("remove removed");
 			} else {
-				holder.time = time;
 				String text = holder.editText.getText().toString();
 				holder.editText.setText(formatTaskText(text));
 				log.info("confirm removed");
@@ -283,6 +275,5 @@ public class TaskArrayAdapter extends ArrayAdapter<Task> {
 		public EditText editText;
 		public ImageButton taskButton;
 		public CheckBox taskCheckBox;
-		public long time;
 	}
 }
