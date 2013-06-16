@@ -9,9 +9,18 @@ import android.os.Bundle;
 import android.view.Gravity;
 import android.view.Menu;
 import android.view.View;
+import android.view.View.OnFocusChangeListener;
+import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ProgressBar;
+import android.widget.TextView;
 
 public class AccountManagement extends Activity{
+	private boolean hasClickedOnETLogin = false;
+	private boolean hasClickedOnETPassword = false;
+	private Button button;
+	private ProgressBar progressBar;
+	private TextView textInfo;
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -21,11 +30,35 @@ public class AccountManagement extends Activity{
 		ab.setDisplayShowTitleEnabled(false);
 		setContentView(R.layout.activity_connect);
 		
-		EditText editInfo = (EditText)findViewById(R.id.editTextInfo);
-		editInfo.setFocusable(false);
-		editInfo.setText("");
-		editInfo.setGravity(Gravity.CENTER);
-		editInfo.setTextColor(Color.RED);
+		button = ((Button) findViewById(R.id.buttonLogin));
+		progressBar = ((ProgressBar)findViewById(R.id.progressBarConnect));
+				
+		final EditText editTextLogin = (EditText)findViewById(R.id.editTextLogin);
+		editTextLogin.setOnFocusChangeListener(new OnFocusChangeListener() {
+		    @Override
+		    public void onFocusChange(View v, boolean hasFocus) {
+		        if(hasFocus && !hasClickedOnETLogin){
+		        	hasClickedOnETLogin = true;
+		        	editTextLogin.setText("");
+		        }
+		    }
+		});
+		
+		final EditText editTextPassword = (EditText)findViewById(R.id.editTextPassword);
+		editTextPassword.setOnFocusChangeListener(new OnFocusChangeListener() {
+		    @Override
+		    public void onFocusChange(View v, boolean hasFocus) {
+		        if(hasFocus && !hasClickedOnETPassword){
+		        	hasClickedOnETPassword = true;
+		        	editTextPassword.setText("");
+		        }
+		    }
+		});
+		
+		textInfo = (TextView)findViewById(R.id.textViewInfo);
+		textInfo.setText("");
+		textInfo.setGravity(Gravity.CENTER);
+		textInfo.setTextColor(Color.RED);
 	}
 
 	@Override
@@ -34,14 +67,32 @@ public class AccountManagement extends Activity{
 		getMenuInflater().inflate(R.menu.main, menu);
 		return true;
 	}
+	
+	@Override
+	public void onWindowFocusChanged(boolean hasFocus)
+	{
+		if(hasFocus)
+		{
+			button.setVisibility(Button.VISIBLE);
+			progressBar.setVisibility(ProgressBar.INVISIBLE);
+		}
+		else
+		{
+			button.setVisibility(Button.INVISIBLE);
+			progressBar.setVisibility(ProgressBar.VISIBLE);
+		}
+	}
 
 	Intent intent = null;
 	public void onClick(View view) {
 		switch (view.getId()) {
+			//DOESN'T WORK, don't know why, we have to put it in default ...
+			/*
 			case R.id.button_createAccount:
 				intent = new Intent(view.getContext(), CreateAccount.class);
 				startActivityForResult(intent, 0);
 				break;
+			*/
 		
 			case R.id.buttonLogin:
 				EditText editLogin = (EditText)findViewById(R.id.editTextLogin);
@@ -55,6 +106,11 @@ public class AccountManagement extends Activity{
 				intent = new Intent(view.getContext(), MainActivity.class);
 				startActivityForResult(intent, 0);
 				
+				break;
+				
+			default:
+				intent = new Intent(view.getContext(), CreateAccount.class);
+				startActivityForResult(intent, 0);
 				break;
 		}
 	}

@@ -9,71 +9,82 @@
     tools:context=".MainActivity" >
 
     <TextView
-        android:id="@+id/textViewLogin"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="26dp"
-        android:text="@string/login"
-        android:textAppearance="?android:attr/textAppearanceLarge" />
-
-    <EditText
-        android:id="@+id/editTextLogin"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/textViewLogin"
-        android:layout_centerHorizontal="true"
-        android:ems="10">
-
-        <requestFocus />
-    </EditText>
-
-    <EditText
-        android:id="@+id/editTextPassword"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/textViewPassword"
-        android:layout_centerHorizontal="true"
-        android:ems="10"
-        android:inputType="textPassword" />
-
-    <Button
-        android:id="@+id/buttonCreateAccount"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/editTextPassword"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="44dp"
-        android:onClick="onClick"
-        android:text="@string/createAccount" />
-
-    <TextView
-        android:id="@+id/textViewPassword"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/editTextLogin"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="28dp"
-        android:text="@string/password"
-        android:textAppearance="?android:attr/textAppearanceLarge" />
-
-    <TextView
         android:id="@+id/editTextInfo"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@+id/buttonCreateAccount"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="29dp"
+        android:layout_marginTop="60dp"
         android:ems="10" />
 
     <ProgressBar
-        android:id="@+id/progressBar"
+        android:id="@+id/progressBarConnect"
         style="?android:attr/progressBarStyleLarge"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
-        android:layout_alignRight="@+id/textViewLogin"
-        android:layout_marginBottom="14dp"
-        android:visibility="invisible" />
-    
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="60dp"
+        android:visibility="invisible"/>
+
+    <TextView
+        android:id="@+id/textView1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:text="@string/newAccount"
+        android:fontFamily="sans-serif-thin"
+        android:textColor="#FF4444"
+        android:textSize="40sp" 
+        android:layout_marginLeft="10dp"
+        android:layout_marginTop="0dp" />
+
+    <EditText
+        android:id="@+id/editTextLogin"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/textView1"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="20dp"
+        android:ems="10"
+        android:minWidth="300dp"
+        android:text="@string/login" />
+
+    <EditText
+        android:id="@+id/editTextPassword1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/editTextLogin"
+        android:layout_below="@+id/editTextLogin"
+        android:layout_marginTop="10dp"
+        android:ems="10"
+        android:inputType="textPassword"
+        android:minWidth="300dp"
+        android:text="@string/password" >
+
+        <requestFocus />
+    </EditText>
+
+    <EditText
+        android:id="@+id/editTextPassword2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/editTextPassword1"
+        android:layout_below="@+id/editTextPassword1"
+        android:layout_marginTop="10dp"
+        android:ems="10"
+        android:inputType="textPassword"
+        android:minWidth="300dp"
+        android:text="@string/password" />
+
+    <Button
+        android:id="@+id/buttonCreateAccount"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/editTextPassword2"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="10dp"
+        android:onClick="onClick"
+        android:text="@string/register" />
+
 </RelativeLayout>
