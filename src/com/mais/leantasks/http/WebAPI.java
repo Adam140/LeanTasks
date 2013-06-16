@@ -26,6 +26,7 @@ import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonParser;
 import com.google.gson.reflect.TypeToken;
+import com.mais.leantasks.model.SyncTasksList;
 import com.mais.leantasks.model.Task;
 
 public class WebAPI {
@@ -151,20 +152,23 @@ public class WebAPI {
 		return new ArrayList<Task>();
 	}
 
-	public static boolean syncTasks(List<Task> tasks) throws Exception {
-		JSONObject json = new JSONObject();
-		// json.put("username", login);
-		// json.put("password", password);
-
+	public static boolean syncTasks(String username, String hash, List<Task> tasks) throws Exception {
 		String URL = SYNC;
+
+		Gson gson = new Gson();
+		SyncTasksList sct = new SyncTasksList();
+		sct.setUsername(username);
+		sct.setHash(hash);
+		sct.setTasks(tasks);
+		
 		DefaultHttpClient httpclient = new DefaultHttpClient();
 		HttpPost httpost = new HttpPost(URL);
-
-		StringEntity se = new StringEntity(json.toString());
+		String json = gson.toJson(sct);
+		StringEntity se = new StringEntity(json);
 		httpost.setEntity(se);
 
-		httpost.setHeader("Accept", "application/json");
-		httpost.setHeader("Content-type", "application/json");
+//		httpost.setHeader("Accept", "application/json");
+//		httpost.setHeader("Content-type", "application/json");
 
 		// Handles what is returned from the page
 		HttpResponse response = httpclient.execute(httpost);
