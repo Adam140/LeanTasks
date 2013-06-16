@@ -11,17 +11,27 @@ import org.apache.http.client.methods.HttpPost;
 import org.apache.http.entity.StringEntity;
 import org.apache.http.impl.client.DefaultHttpClient;
 import org.apache.http.util.EntityUtils;
+import org.json.JSONArray;
 import org.json.JSONObject;
+
+import android.app.Activity;
+import android.content.Context;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 
 import com.mais.leantasks.model.Task;
 
 public class WebAPI {
 	static final String ADRESS = "http://app-serviceleantasks.rhcloud.com/";
 
-	static final String USER_EXISTS = ADRESS + "api/user/exists/"; // GET /api/user/exists/{username}
-	static final String REGISTER = ADRESS + "api/user/register"; // POST /api/user/register
-	static final String AUTH = ADRESS + "api/user/auth/"; // GET api/user/auth/{username}/{password}
-	static final String GET_ALL = ADRESS + "api/task/getAll/"; // GET /api/task/getAll/{username}/{hash}/{date}
+	static final String USER_EXISTS = ADRESS + "api/user/exists/"; // GET
+																	// /api/user/exists/{username}
+	static final String REGISTER = ADRESS + "api/user/register"; // POST
+																	// /api/user/register
+	static final String AUTH = ADRESS + "api/user/auth/"; // GET
+															// api/user/auth/{username}/{password}
+	static final String GET_ALL = ADRESS + "api/task/getAll/"; // GET
+																// /api/task/getAll/{username}/{hash}/{date}
 	static final String SYNC = ADRESS + "api/task/sync"; // POST /api/task/sync
 
 	/**
@@ -86,7 +96,7 @@ public class WebAPI {
 		else
 			return false;
 	}
-	
+
 	/**
 	 * 
 	 * @param login
@@ -94,17 +104,72 @@ public class WebAPI {
 	 * @param date
 	 * @return List of the tasks obtained from the webservice.
 	 */
-	public static List<Task> getAllTasks(String login, String hash, String date) throws Exception {
-		
+	public static List<Task> getAllTasks(String login, String hash, String date)
+			throws Exception {
+
 		String URL = GET_ALL + login + "/" + hash + "/" + date;
-		
+		// String URL = "http://app-serviceleantasks.rhcloud.com/api/task/test";
 		HttpClient client = new DefaultHttpClient();
 		HttpGet get = new HttpGet(URL);
 		HttpResponse responseGet = client.execute(get);
 		HttpEntity resEntityGet = responseGet.getEntity();
-		
-		
+
+		if (resEntityGet != null) {
+			String retSrc = EntityUtils.toString(resEntityGet);
+			// parsing JSON
+			JSONObject result = new JSONObject(retSrc); // Convert String to
+														// JSON Object
+
+			JSONArray tokenList = result.getJSONArray("names");
+			JSONObject oj = tokenList.getJSONObject(0);
+			String token = oj.getString("name");
+		}
+
+		System.out.println(resEntityGet);
 		return new ArrayList<Task>();
+	}
+
+	public static boolean syncTasks() throws Exception {
+		JSONObject json = new JSONObject();
+		// json.put("username", login);
+		// json.put("password", password);
+
+		String URL = SYNC;
+		DefaultHttpClient httpclient = new DefaultHttpClient();
+		HttpPost httpost = new HttpPost(URL);
+
+		StringEntity se = new StringEntity(json.toString());
+		httpost.setEntity(se);
+
+		httpost.setHeader("Accept", "application/json");
+		httpost.setHeader("Content-type", "application/json");
+
+		// Handles what is returned from the page
+		HttpResponse response = httpclient.execute(httpost);
+
+		if (response.getStatusLine().getStatusCode() == 201)
+			return true;
+		else
+			return false;
+	}
+
+	/**
+	 * Checks if a network is available. Moved from CreateAccount activity, as
+	 * it might be of wider usefulness.
+	 * 
+	 * @param activity
+	 * @return
+	 */
+	public static boolean isNetworkAvailable(Activity activity) {
+		ConnectivityManager cm = (ConnectivityManager) activity
+				.getSystemService(Context.CONNECTIVITY_SERVICE);
+		NetworkInfo networkInfo = cm.getActiveNetworkInfo();
+		// if no network is available networkInfo will be null
+		// otherwise check if we are connected
+		if (networkInfo != null && networkInfo.isConnected()) {
+			return true;
+		}
+		return false;
 	}
 
 }

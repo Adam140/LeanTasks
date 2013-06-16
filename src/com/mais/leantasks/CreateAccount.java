@@ -17,6 +17,7 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.mais.leantasks.asyncTask.RegisterTask;
+import com.mais.leantasks.http.WebAPI;
 
 public class CreateAccount extends Activity{
 	
@@ -97,7 +98,7 @@ public class CreateAccount extends Activity{
 				// the user has to put passwords & login first
 				{
 					// TODO : link with the web service for user creation into the DB
-					if(!isNetworkAvailable())
+					if(!WebAPI.isNetworkAvailable(this))
 						textInfo.setText("Turn on your network connection");
 					else
 					{
@@ -123,16 +124,5 @@ public class CreateAccount extends Activity{
 				break;
 		}
 	}
-	
-	public boolean isNetworkAvailable() {
-	    ConnectivityManager cm = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
-	    NetworkInfo networkInfo = cm.getActiveNetworkInfo();
-	    // if no network is available networkInfo will be null
-	    // otherwise check if we are connected
-	    if (networkInfo != null && networkInfo.isConnected()) {
-	        return true;
-	    }
-	    return false;
-	} 
 	
 }

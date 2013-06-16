@@ -20,6 +20,7 @@ import android.widget.ListView;
 import android.widget.ProgressBar;
 
 import com.mais.leantasks.asyncTask.GetTasksTask;
+import com.mais.leantasks.http.WebAPI;
 import com.mais.leantasks.model.Task;
 import com.mais.leantasks.security.Encrypt;
 import com.mais.leantasks.sql.Table;
@@ -106,19 +107,24 @@ public class MainActivity extends Activity {
 	 */
 	public void getNewTasksFromWS() {
 		
-		progressBar = (ProgressBar)findViewById(R.id.progressBar);
+		if (WebAPI.isNetworkAvailable(this)) {
 		
-		table = Table.getInstance(this);
-		
-		// mock data for testing purposes
-		String name = "admin";
-		String pass = Encrypt.md5("admin");
-		String date = "2013-06-01-12-00";
-		
-		GetTasksTask getTasks = new GetTasksTask(progressBar, this);
-		getTasks.execute(name, pass, date);
-		
-		tasks = getTasks.getTasks();
+			progressBar = (ProgressBar)findViewById(R.id.progressBar);
+			
+			table = Table.getInstance(this);
+			
+			// mock data for testing purposes
+			String name = "admin";
+			String pass = Encrypt.md5("admin");
+			String date = "2013-06-01-12-00";
+			
+			GetTasksTask getTasks = new GetTasksTask(progressBar, this);
+			getTasks.execute(name, pass, date);
+			
+			tasks = getTasks.getTasks();
+		} else {
+			System.out.println("nie ma");
+		}
 		
 	}
 
