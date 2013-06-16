@@ -46,10 +46,7 @@
         android:inputType="textPassword"
         android:minWidth="300dp"
         android:background="@drawable/edit_text"
-        android:hint="@string/password" >
-
-        <requestFocus />
-    </EditText>
+        android:hint="@string/password" />
 
     <EditText
         android:id="@+id/editTextLogin"
@@ -62,6 +59,7 @@
         android:minWidth="300dp"
         android:background="@drawable/edit_text"
         android:hint="@string/login">
+        <requestFocus />
     </EditText>
 
     <Button
