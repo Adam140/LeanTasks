@@ -4,6 +4,7 @@ import android.app.ActionBar;
 import android.app.Activity;
 import android.content.Context;
 import android.graphics.Color;
+import android.graphics.Typeface;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.Bundle;
@@ -72,6 +73,12 @@ public class CreateAccount extends Activity{
 		textInfo.setText("");
 		textInfo.setGravity(Gravity.CENTER);
 		textInfo.setTextColor(Color.RED);
+		
+		TextView textViewNewAccount = (TextView)findViewById(R.id.textViewNewAccount); 
+		
+		Typeface robotoThin = Typeface.createFromAsset(getAssets(), "fonts/roboto_thin.ttf"); 
+		
+		textViewNewAccount.setTypeface(robotoThin);
 	}
 
 	@Override

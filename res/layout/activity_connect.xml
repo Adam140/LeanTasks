@@ -16,13 +16,12 @@
         android:layout_height="wrap_content"
         android:layout_alignParentLeft="true"
         android:layout_alignParentTop="true"
-        android:fontFamily="sans-serif-thin"
-        android:text="@string/hello"
-        android:textColor="#FF4444"
-        android:textSize="50sp" 
         android:layout_marginLeft="10dp"
         android:layout_marginTop="0dp"
-        />
+        android:text="@string/hello"
+        android:textColor="#FF4444"
+        android:textSize="50sp"
+        android:typeface="normal" />
 
     <TextView
         android:id="@+id/textViewIntroduce"
@@ -33,7 +32,6 @@
         android:text="@string/introduce" 
         android:textColor="#878787"
         android:textSize="18sp" 
-        android:fontFamily="sans-serif-light"
      />
 
     <EditText
@@ -76,13 +74,12 @@
         android:text="@string/sign" />
 
     <TextView
-        android:id="@+id/textView1"
+        android:id="@+id/textViewNewHere"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignLeft="@+id/textViewIntroduce"
         android:layout_below="@+id/buttonLogin"
         android:layout_marginTop="34dp"
-        android:fontFamily="sans-serif-light"
         android:text="@string/newUser"
         android:textColor="#878787"
         android:textSize="18sp" />
@@ -92,7 +89,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignLeft="@+id/buttonLogin"
-        android:layout_below="@+id/textView1"
+        android:layout_below="@+id/textViewNewHere"
         android:layout_marginTop="10dp"
         android:minWidth="200dp"
         android:onClick="onClick"
@@ -111,7 +108,7 @@
         android:id="@+id/textViewInfo"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignLeft="@+id/textView1"
+        android:layout_alignLeft="@+id/textViewNewHere"
         android:layout_below="@+id/button_createAccount"
         android:layout_marginTop="20dp"
         android:text="" />
