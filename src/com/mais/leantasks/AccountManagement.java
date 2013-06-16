@@ -16,7 +16,7 @@ import android.widget.EditText;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
-public class AccountManagement extends Activity{
+public class AccountManagement extends Activity {
 	private boolean hasClickedOnETLogin = false;
 	private boolean hasClickedOnETPassword = false;
 	private Button button;

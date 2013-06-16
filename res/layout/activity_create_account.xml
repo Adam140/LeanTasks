@@ -47,7 +47,7 @@
         android:layout_marginTop="20dp"
         android:ems="10"
         android:minWidth="300dp"
-        android:text="@string/login" />
+        android:hint="@string/login" />
 
     <EditText
         android:id="@+id/editTextPassword1"
@@ -59,7 +59,7 @@
         android:ems="10"
         android:inputType="textPassword"
         android:minWidth="300dp"
-        android:text="@string/password" >
+        android:hint="@string/password" >
 
         <requestFocus />
     </EditText>
@@ -74,7 +74,7 @@
         android:ems="10"
         android:inputType="textPassword"
         android:minWidth="300dp"
-        android:text="@string/password" />
+        android:hint="@string/password2" />
 
     <Button
         android:id="@+id/buttonCreateAccount"
