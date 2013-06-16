@@ -10,6 +10,7 @@ import android.os.Bundle;
 import android.view.Gravity;
 import android.view.Menu;
 import android.view.View;
+import android.view.View.OnFocusChangeListener;
 import android.widget.EditText;
 import android.widget.ProgressBar;
 import android.widget.TextView;
@@ -20,6 +21,9 @@ public class CreateAccount extends Activity{
 	
 	private TextView textInfo;
 	private ProgressBar progressBar;
+	private boolean hasClickedOnETLogin = false;
+	private boolean hasClickedOnETPassword1 = false;
+	private boolean hasClickedOnETPassword2 = false;
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -29,7 +33,40 @@ public class CreateAccount extends Activity{
 		ab.setDisplayShowTitleEnabled(false);
 		setContentView(R.layout.activity_create_account);
 		
-		progressBar = (ProgressBar)findViewById(R.id.progressBar);
+		final EditText editTextLogin = (EditText)findViewById(R.id.editTextLogin);
+		editTextLogin.setOnFocusChangeListener(new OnFocusChangeListener() {
+		    @Override
+		    public void onFocusChange(View v, boolean hasFocus) {
+		        if(hasFocus && !hasClickedOnETLogin){
+		        	hasClickedOnETLogin = true;
+		        	editTextLogin.setText("");
+		        }
+		    }
+		});
+		
+		final EditText editTextPassword1 = (EditText)findViewById(R.id.editTextPassword1);
+		editTextPassword1.setOnFocusChangeListener(new OnFocusChangeListener() {
+		    @Override
+		    public void onFocusChange(View v, boolean hasFocus) {
+		        if(hasFocus && !hasClickedOnETPassword1){
+		        	hasClickedOnETPassword1 = true;
+		        	editTextPassword1.setText("");
+		        }
+		    }
+		});
+		
+		final EditText editTextPassword2 = (EditText)findViewById(R.id.editTextPassword2);
+		editTextPassword2.setOnFocusChangeListener(new OnFocusChangeListener() {
+		    @Override
+		    public void onFocusChange(View v, boolean hasFocus) {
+		        if(hasFocus && !hasClickedOnETPassword2){
+		        	hasClickedOnETPassword2 = true;
+		        	editTextPassword2.setText("");
+		        }
+		    }
+		});
+		
+		progressBar = (ProgressBar)findViewById(R.id.progressBarConnect);
 		
 		textInfo = (TextView)findViewById(R.id.editTextInfo);
 		textInfo.setText("");
@@ -47,16 +84,34 @@ public class CreateAccount extends Activity{
 	public void onClick(View view) {
 		switch (view.getId()) {				
 			case R.id.buttonCreateAccount:
-				// TODO : link with the web service for user creation into the DB
-				if(!isNetworkAvailable())
-					textInfo.setText("Turn on your network connection");
+				textInfo.setText("");
+				
+				if(hasClickedOnETPassword1 && hasClickedOnETPassword2 && hasClickedOnETLogin)
+				// the user has to put passwords & login first
+				{
+					// TODO : link with the web service for user creation into the DB
+					if(!isNetworkAvailable())
+						textInfo.setText("Turn on your network connection");
+					else
+					{
+						String login = ((EditText) findViewById(R.id.editTextLogin)).getText().toString();
+						String password1 = ((EditText) findViewById(R.id.editTextPassword1)).getText().toString();
+						String password2 = ((EditText) findViewById(R.id.editTextPassword2)).getText().toString();
+						
+						if(password1.compareTo(password2) == 0)
+						{
+							RegisterTask register = new RegisterTask(progressBar, textInfo, this);
+							register.execute(login, password1);
+						}
+						else
+						{
+							textInfo.setText("Passwords don't match");
+						}
+					}
+				}
 				else
 				{
-					String login = ((EditText) findViewById(R.id.editTextLogin)).getText().toString();
-					String password = ((EditText) findViewById(R.id.editTextPassword)).getText().toString();
-					
-					RegisterTask register = new RegisterTask(progressBar, textInfo, this);
-					register.execute(login, password);
+					textInfo.setText("You have to put your login & passwords first ...");
 				}
 				break;
 		}
