@@ -42,7 +42,7 @@ public class MainActivity extends Activity {
 		setContentView(R.layout.activity_main);
 
 		// won't need to be called every time
-//		getNewTasksFromWS();
+		getNewTasksFromWS();
 		
 		table = Table.getInstance(this);
 		tasks = table.tasks.selectAll();
@@ -114,7 +114,7 @@ public class MainActivity extends Activity {
 			table = Table.getInstance(this);
 			
 			// mock data for testing purposes
-			String name = "admin";
+			String name = "marcin";
 			String pass = Encrypt.md5("admin");
 			String date = "2013-06-01-12-00";
 			
