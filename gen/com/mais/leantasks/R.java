@@ -39,27 +39,30 @@ public final class R {
         public static final int btn_check_on_focused_holo_light=0x7f020008;
         public static final int btn_check_on_holo_light=0x7f020009;
         public static final int btn_check_on_pressed_holo_light=0x7f02000a;
-        public static final int btn_transparent=0x7f02000b;
-        public static final int edit_text=0x7f02000c;
-        public static final int ic_action_add=0x7f02000d;
-        public static final int ic_action_confirm=0x7f02000e;
-        public static final int ic_action_refresh=0x7f02000f;
-        public static final int ic_action_remove=0x7f020010;
-        public static final int ic_launcher=0x7f020011;
-        public static final int ic_logo=0x7f020012;
-        public static final int ic_logo_sq=0x7f020013;
-        public static final int ic_undobar_undo=0x7f020014;
-        public static final int textfield_activated_holo_light=0x7f020015;
-        public static final int textfield_default_holo_light=0x7f020016;
-        public static final int textfield_disabled_focused_holo_light=0x7f020017;
-        public static final int textfield_disabled_holo_light=0x7f020018;
-        public static final int textfield_focused_holo_light=0x7f020019;
+        public static final int btn_default_disabled_focused_holo_light=0x7f02000b;
+        public static final int btn_default_disabled_holo_light=0x7f02000c;
+        public static final int btn_default_focused_holo_light=0x7f02000d;
+        public static final int btn_default_holo_light=0x7f02000e;
+        public static final int btn_default_normal_holo_light=0x7f02000f;
+        public static final int btn_default_pressed_holo_light=0x7f020010;
+        public static final int btn_transparent=0x7f020011;
+        public static final int edit_text=0x7f020012;
+        public static final int ic_action_add=0x7f020013;
+        public static final int ic_action_confirm=0x7f020014;
+        public static final int ic_action_refresh=0x7f020015;
+        public static final int ic_action_remove=0x7f020016;
+        public static final int ic_launcher=0x7f020017;
+        public static final int ic_logo=0x7f020018;
+        public static final int ic_logo_sq=0x7f020019;
+        public static final int ic_undobar_undo=0x7f02001a;
+        public static final int textfield_activated_holo_light=0x7f02001b;
+        public static final int textfield_default_holo_light=0x7f02001c;
+        public static final int textfield_disabled_focused_holo_light=0x7f02001d;
+        public static final int textfield_disabled_holo_light=0x7f02001e;
+        public static final int textfield_focused_holo_light=0x7f02001f;
     }
     public static final class id {
-        public static final int action_help=0x7f0a001c;
         public static final int action_logout=0x7f0a001a;
-        public static final int action_rate=0x7f0a001d;
-        public static final int action_settings=0x7f0a001b;
         public static final int action_sync=0x7f0a0019;
         public static final int buttonCreateAccount=0x7f0a000a;
         public static final int buttonLogin=0x7f0a0004;
@@ -163,6 +166,8 @@ public final class R {
         /**  Application theme. 
          */
         public static final int AppTheme=0x7f080001;
+        public static final int ButtonLeanTasks=0x7f080003;
+        public static final int ImageButtonLeanTasks=0x7f080004;
         public static final int MyActionBar=0x7f080002;
     }
 }

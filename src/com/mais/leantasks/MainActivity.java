@@ -92,60 +92,9 @@ public class MainActivity extends Activity {
 			break;
 		}
 	}
-
-//	/**
-//	 * Checked or uncheck task
-//	 */
-//	private OnItemClickListener clickOnTask = new OnItemClickListener() {
-//		@Override
-//		public void onItemClick(AdapterView<?> tasks, View view, int position,
-//				long id) {
-//			Task task = (Task) tasks.getItemAtPosition(position);
-//			boolean checked = !task.isChecked();
-//			((CheckBox) view.findViewById(R.id.task_check_box))
-//					.setChecked(checked);
-//			task.setChecked(checked);
-//			task.setUpdatedDate(new Date().toString());
-//			table.tasks.update(task);
-//		}
-//	};
 	
-//	/**
-//	 * Modifying existing task
-//	 */
-//	private OnItemLongClickListener editOnTask = new OnItemLongClickListener() {
-//		@Override
-//		public boolean onItemLongClick(AdapterView<?> tasks, View view,
-//				int position, long id) {
-//			currentTask = (Task) tasks.getItemAtPosition(position);
-//			showDialog(DIALOG_EDIT_TASK);
-//			return true;
-//		}
-//	};
-
-//	@Override
-//	protected void onPrepareDialog(int id, Dialog dialog) {
-//		if (currentTask != null) {
-//			if (editTextTask == null)
-//				editTextTask = (EditText) dialog
-//						.findViewById(R.id.edit_task_field);
-//			editTextTask.setText(currentTask.getText());
-//		}
-//	}
-//
-//	private DialogInterface.OnClickListener dialogButtonClick = new DialogInterface.OnClickListener() {
-//		@Override
-//		public void onClick(DialogInterface dialog, int which) {
-//			if (which == dialog.BUTTON_POSITIVE) {
-//				if (currentTask != null && editTextTask != null){
-//					currentTask.setText(editTextTask.getText().toString());
-//					currentTask.setUpdatedDate(new Date().toString());
-//					table.tasks.update(currentTask);
-//					taskArrayAdapter.notifyDataSetChanged();
-//
-//				}
-//			}
-//		}
-//	};
+	@Override
+		public void onBackPressed() {
+	}
 
 }
