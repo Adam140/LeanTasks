@@ -4,6 +4,7 @@ import android.app.ActionBar;
 import android.app.Activity;
 import android.content.Intent;
 import android.graphics.Color;
+import android.graphics.Typeface;
 import android.os.Bundle;
 
 import android.view.Gravity;
@@ -15,7 +16,7 @@ import android.widget.EditText;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
-public class AccountManagement extends Activity{
+public class AccountManagement extends Activity {
 	private boolean hasClickedOnETLogin = false;
 	private boolean hasClickedOnETPassword = false;
 	private Button button;
@@ -59,6 +60,17 @@ public class AccountManagement extends Activity{
 		textInfo.setText("");
 		textInfo.setGravity(Gravity.CENTER);
 		textInfo.setTextColor(Color.RED);
+		
+		TextView textViewHello = (TextView)findViewById(R.id.textViewHello); 
+		TextView textViewIntroduce = (TextView)findViewById(R.id.textViewIntroduce); 
+		TextView textViewNewHere = (TextView)findViewById(R.id.textViewNewHere); 
+		
+		Typeface robotoLight = Typeface.createFromAsset(getAssets(), "fonts/roboto_light.ttf"); 
+		Typeface robotoThin = Typeface.createFromAsset(getAssets(), "fonts/roboto_thin.ttf"); 
+		
+		textViewHello.setTypeface(robotoThin); 
+		textViewIntroduce.setTypeface(robotoLight); 
+		textViewNewHere.setTypeface(robotoLight);
 	}
 
 	@Override

@@ -22,6 +22,7 @@
     <string name="createAccount">Create new account</string>
     <string name="login">Login</string>
     <string name="password">Password</string>
+    <string name="password2">Repeat password</string>
 <!-- Registration text info -->
     <string name="empty_field">Some field is empty</string>
     <string name="not_available_login">Login is not available</string>

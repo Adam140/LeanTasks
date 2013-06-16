@@ -56,35 +56,36 @@ public final class R {
         public static final int textfield_focused_holo_light=0x7f020019;
     }
     public static final class id {
-        public static final int action_help=0x7f0a001b;
-        public static final int action_logout=0x7f0a0019;
-        public static final int action_rate=0x7f0a001c;
-        public static final int action_settings=0x7f0a001a;
-        public static final int action_sync=0x7f0a0018;
+        public static final int action_help=0x7f0a001c;
+        public static final int action_logout=0x7f0a001a;
+        public static final int action_rate=0x7f0a001d;
+        public static final int action_settings=0x7f0a001b;
+        public static final int action_sync=0x7f0a0019;
         public static final int buttonCreateAccount=0x7f0a000a;
         public static final int buttonLogin=0x7f0a0004;
-        public static final int button_add=0x7f0a000e;
+        public static final int button_add=0x7f0a000f;
         public static final int button_createAccount=0x7f0a0006;
-        public static final int dialog_edit_task=0x7f0a0011;
+        public static final int dialog_edit_task=0x7f0a0012;
         public static final int editTextInfo=0x7f0a0009;
         public static final int editTextLogin=0x7f0a0003;
         public static final int editTextPassword=0x7f0a0002;
-        public static final int editTextPassword1=0x7f0a000b;
-        public static final int editTextPassword2=0x7f0a000c;
-        public static final int edit_task_field=0x7f0a0012;
-        public static final int edit_text_task=0x7f0a000d;
-        public static final int list_view_tasks=0x7f0a0010;
+        public static final int editTextPassword1=0x7f0a000c;
+        public static final int editTextPassword2=0x7f0a000d;
+        public static final int edit_task_field=0x7f0a0013;
+        public static final int edit_text_task=0x7f0a000e;
+        public static final int list_view_tasks=0x7f0a0011;
         public static final int progressBarConnect=0x7f0a0007;
-        public static final int task_button=0x7f0a0017;
-        public static final int task_check_box=0x7f0a0015;
-        public static final int task_edit_text=0x7f0a0016;
-        public static final int task_view=0x7f0a0014;
-        public static final int textView1=0x7f0a0005;
+        public static final int task_button=0x7f0a0018;
+        public static final int task_check_box=0x7f0a0016;
+        public static final int task_edit_text=0x7f0a0017;
+        public static final int task_view=0x7f0a0015;
         public static final int textViewHello=0x7f0a0000;
         public static final int textViewInfo=0x7f0a0008;
         public static final int textViewIntroduce=0x7f0a0001;
-        public static final int text_view_new_task=0x7f0a0013;
-        public static final int text_view_tasks=0x7f0a000f;
+        public static final int textViewNewAccount=0x7f0a000b;
+        public static final int textViewNewHere=0x7f0a0005;
+        public static final int text_view_new_task=0x7f0a0014;
+        public static final int text_view_tasks=0x7f0a0010;
     }
     public static final class integer {
         public static final int crouton_hide_delay=0x7f060000;
@@ -109,26 +110,27 @@ public final class R {
         public static final int edit_task=0x7f070005;
         /**  Registration text info 
          */
-        public static final int empty_field=0x7f070013;
-        public static final int hello=0x7f070016;
+        public static final int empty_field=0x7f070014;
+        public static final int hello=0x7f070017;
         public static final int help=0x7f07000e;
-        public static final int introduce=0x7f070017;
+        public static final int introduce=0x7f070018;
         public static final int login=0x7f070011;
         public static final int logout=0x7f07000c;
         public static final int modify=0x7f070006;
-        public static final int newAccount=0x7f07001b;
-        public static final int newUser=0x7f070019;
+        public static final int newAccount=0x7f07001c;
+        public static final int newUser=0x7f07001a;
         /**  Main layout 
          */
         public static final int new_task=0x7f070002;
-        public static final int not_available_login=0x7f070014;
+        public static final int not_available_login=0x7f070015;
         public static final int password=0x7f070012;
+        public static final int password2=0x7f070013;
         public static final int rate_the_app=0x7f07000f;
-        public static final int register=0x7f07001a;
+        public static final int register=0x7f07001b;
         public static final int remove=0x7f070008;
-        public static final int service_problem=0x7f070015;
+        public static final int service_problem=0x7f070016;
         public static final int settings=0x7f07000d;
-        public static final int sign=0x7f070018;
+        public static final int sign=0x7f070019;
         /**  Menu part 
          */
         public static final int sync=0x7f07000b;

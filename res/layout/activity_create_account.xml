@@ -28,12 +28,11 @@
         android:visibility="invisible"/>
 
     <TextView
-        android:id="@+id/textView1"
+        android:id="@+id/textViewNewAccount"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentTop="true"
         android:text="@string/newAccount"
-        android:fontFamily="sans-serif-thin"
         android:textColor="#FF4444"
         android:textSize="40sp" 
         android:layout_marginLeft="10dp"
@@ -43,12 +42,12 @@
         android:id="@+id/editTextLogin"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/textView1"
+        android:layout_below="@+id/textViewNewAccount"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="20dp"
         android:ems="10"
         android:minWidth="300dp"
-        android:text="@string/login" />
+        android:hint="@string/login" />
 
     <EditText
         android:id="@+id/editTextPassword1"
@@ -60,7 +59,7 @@
         android:ems="10"
         android:inputType="textPassword"
         android:minWidth="300dp"
-        android:text="@string/password" >
+        android:hint="@string/password" >
 
         <requestFocus />
     </EditText>
@@ -75,7 +74,7 @@
         android:ems="10"
         android:inputType="textPassword"
         android:minWidth="300dp"
-        android:text="@string/password" />
+        android:hint="@string/password2" />
 
     <Button
         android:id="@+id/buttonCreateAccount"
