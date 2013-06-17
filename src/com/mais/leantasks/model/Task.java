@@ -1,14 +1,26 @@
 package com.mais.leantasks.model;
 
 import java.util.List;
+import com.google.gson.annotations.SerializedName;
 
 public class Task {
 
+	@SerializedName("id")
 	private long id;
+	
+	@SerializedName("text")
 	private String text = "";
+	
+	@SerializedName("createdDate")
 	private String createdDate = "";
+	
+	@SerializedName("updatedDate")
 	private String updatedDate = "";
+	
+	@SerializedName("checked")
 	private boolean checked;
+	
+	@SerializedName("archived")
 	private boolean archived;
 
 	public long getId() {

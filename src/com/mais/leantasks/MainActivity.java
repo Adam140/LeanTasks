@@ -8,18 +8,17 @@ import android.annotation.SuppressLint;
 import android.app.ActionBar;
 import android.app.Activity;
 import android.content.Context;
-import android.content.res.Configuration;
 import android.os.Bundle;
-import android.view.KeyEvent;
 import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
-import android.view.ViewTreeObserver.OnGlobalLayoutListener;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.ProgressBar;
 
 import com.mais.leantasks.asyncTask.GetTasksTask;
+import com.mais.leantasks.asyncTask.SyncTasksTask;
 import com.mais.leantasks.http.WebAPI;
 import com.mais.leantasks.model.Task;
 import com.mais.leantasks.security.Encrypt;
@@ -41,23 +40,20 @@ public class MainActivity extends Activity {
 		ab.setDisplayShowTitleEnabled(false);
 		setContentView(R.layout.activity_main);
 
-		// won't need to be called every time
-		//getNewTasksFromWS();
-		
 		table = Table.getInstance(this);
 		tasks = table.tasks.selectAll();
 		listView = (ListView) findViewById(R.id.list_view_tasks);
-		
+
 		taskArrayAdapter = new TaskArrayAdapter(this, R.layout.task, tasks);
 
-		//listView.setClickable(true);
-		//listView.setItemsCanFocus(true);
-		//listView.setOnItemClickListener(clickOnTask);
+		// listView.setClickable(true);
+		// listView.setItemsCanFocus(true);
+		// listView.setOnItemClickListener(clickOnTask);
 		// listTasks.setOnItemLongClickListener(editOnTask);
 		listView.setAdapter(taskArrayAdapter);
 
 		taskArrayAdapter.notifyDataSetChanged();
-		
+
 	}
 
 	@Override
@@ -65,6 +61,18 @@ public class MainActivity extends Activity {
 		// Inflate the menu; this adds items to the action bar if it is present.
 		getMenuInflater().inflate(R.menu.main, menu);
 		return true;
+	}
+
+	@Override
+	public boolean onOptionsItemSelected(MenuItem item) {
+		switch (item.getItemId()) {
+		case R.id.action_sync:
+			synchronizeTasks();
+			return true;
+
+		default:
+			return super.onOptionsItemSelected(item);
+		}
 	}
 
 	/**
@@ -100,87 +108,99 @@ public class MainActivity extends Activity {
 			break;
 		}
 	}
-	
+
 	/**
-	 * This function will be used to invoke task retrieval from the cloud.
-	 * TODO Use real user data and store tasks in the DB.
+	 * Updates the list of tasks and sends the local list for synchronization.
 	 */
-	private void getNewTasksFromWS() {
-		
+	public void synchronizeTasks() {
 		if (WebAPI.isNetworkAvailable(this)) {
-		
-			progressBar = (ProgressBar)findViewById(R.id.progressBar);
 			
-			table = Table.getInstance(this);
+			// TODO get real user data
+			String username = "marcin";
+			String hash = Encrypt.md5("admin");
+			String date = "2013-04-01-12-00";
 			
-			// mock data for testing purposes
-			String name = "admin";
-			String pass = Encrypt.md5("admin");
-			String date = "2010-05-01-12-00";
-			
-			GetTasksTask getTasks = new GetTasksTask(progressBar, this);
-			getTasks.execute(name, pass, date);
-			
-			tasks = getTasks.getTasks();
-		} else {
-			System.out.println("nie ma");
+			sendTasksToWS(username, hash);
+			getNewTasksFromWS(username, hash, date);
 		}
-		
 	}
 
-//	/**
-//	 * Checked or uncheck task
-//	 */
-//	private OnItemClickListener clickOnTask = new OnItemClickListener() {
-//		@Override
-//		public void onItemClick(AdapterView<?> tasks, View view, int position,
-//				long id) {
-//			Task task = (Task) tasks.getItemAtPosition(position);
-//			boolean checked = !task.isChecked();
-//			((CheckBox) view.findViewById(R.id.task_check_box))
-//					.setChecked(checked);
-//			task.setChecked(checked);
-//			task.setUpdatedDate(new Date().toString());
-//			table.tasks.update(task);
-//		}
-//	};
-	
-//	/**
-//	 * Modifying existing task
-//	 */
-//	private OnItemLongClickListener editOnTask = new OnItemLongClickListener() {
-//		@Override
-//		public boolean onItemLongClick(AdapterView<?> tasks, View view,
-//				int position, long id) {
-//			currentTask = (Task) tasks.getItemAtPosition(position);
-//			showDialog(DIALOG_EDIT_TASK);
-//			return true;
-//		}
-//	};
+	/**
+	 * Sends the tasks list to the WebService for the purpose of synchronization.
+	 */
+	public void sendTasksToWS(String username, String hash) {
+		SyncTasksTask syncTasks = new SyncTasksTask(this);
+		syncTasks.execute(username, hash);
+	}
 
-//	@Override
-//	protected void onPrepareDialog(int id, Dialog dialog) {
-//		if (currentTask != null) {
-//			if (editTextTask == null)
-//				editTextTask = (EditText) dialog
-//						.findViewById(R.id.edit_task_field);
-//			editTextTask.setText(currentTask.getText());
-//		}
-//	}
-//
-//	private DialogInterface.OnClickListener dialogButtonClick = new DialogInterface.OnClickListener() {
-//		@Override
-//		public void onClick(DialogInterface dialog, int which) {
-//			if (which == dialog.BUTTON_POSITIVE) {
-//				if (currentTask != null && editTextTask != null){
-//					currentTask.setText(editTextTask.getText().toString());
-//					currentTask.setUpdatedDate(new Date().toString());
-//					table.tasks.update(currentTask);
-//					taskArrayAdapter.notifyDataSetChanged();
-//
-//				}
-//			}
-//		}
-//	};
-	
+	/**
+	 * This function will be used to invoke task retrieval from the cloud. TODO
+	 * Use real user data and store tasks in the DB.
+	 */
+	public void getNewTasksFromWS(String username, String hash, String date) {
+		progressBar = (ProgressBar) findViewById(R.id.progressBar);
+
+		GetTasksTask getTasks = new GetTasksTask(progressBar, this);
+		getTasks.execute(username, hash, date);
+
+		tasks = getTasks.getTasks();
+	}
+
+	// /**
+	// * Checked or uncheck task
+	// */
+	// private OnItemClickListener clickOnTask = new OnItemClickListener() {
+	// @Override
+	// public void onItemClick(AdapterView<?> tasks, View view, int position,
+	// long id) {
+	// Task task = (Task) tasks.getItemAtPosition(position);
+	// boolean checked = !task.isChecked();
+	// ((CheckBox) view.findViewById(R.id.task_check_box))
+	// .setChecked(checked);
+	// task.setChecked(checked);
+	// task.setUpdatedDate(new Date().toString());
+	// table.tasks.update(task);
+	// }
+	// };
+
+	// /**
+	// * Modifying existing task
+	// */
+	// private OnItemLongClickListener editOnTask = new
+	// OnItemLongClickListener() {
+	// @Override
+	// public boolean onItemLongClick(AdapterView<?> tasks, View view,
+	// int position, long id) {
+	// currentTask = (Task) tasks.getItemAtPosition(position);
+	// showDialog(DIALOG_EDIT_TASK);
+	// return true;
+	// }
+	// };
+
+	// @Override
+	// protected void onPrepareDialog(int id, Dialog dialog) {
+	// if (currentTask != null) {
+	// if (editTextTask == null)
+	// editTextTask = (EditText) dialog
+	// .findViewById(R.id.edit_task_field);
+	// editTextTask.setText(currentTask.getText());
+	// }
+	// }
+	//
+	// private DialogInterface.OnClickListener dialogButtonClick = new
+	// DialogInterface.OnClickListener() {
+	// @Override
+	// public void onClick(DialogInterface dialog, int which) {
+	// if (which == dialog.BUTTON_POSITIVE) {
+	// if (currentTask != null && editTextTask != null){
+	// currentTask.setText(editTextTask.getText().toString());
+	// currentTask.setUpdatedDate(new Date().toString());
+	// table.tasks.update(currentTask);
+	// taskArrayAdapter.notifyDataSetChanged();
+	//
+	// }
+	// }
+	// }
+	// };
+
 }

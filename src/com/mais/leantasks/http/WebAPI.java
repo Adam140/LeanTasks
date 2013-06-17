@@ -1,6 +1,8 @@
 package com.mais.leantasks.http;
 
+import java.lang.reflect.Type;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 
 import org.apache.http.HttpEntity;
@@ -19,7 +21,14 @@ import android.content.Context;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 
+import com.google.gson.Gson;
+import com.google.gson.JsonArray;
+import com.google.gson.JsonElement;
+import com.google.gson.JsonParser;
+import com.google.gson.reflect.TypeToken;
+import com.mais.leantasks.model.SyncTasksList;
 import com.mais.leantasks.model.Task;
+import com.mais.leantasks.model.TaskJSON_DTO;
 
 public class WebAPI {
 	static final String ADRESS = "http://app-serviceleantasks.rhcloud.com/";
@@ -104,11 +113,9 @@ public class WebAPI {
 	 * @param date
 	 * @return List of the tasks obtained from the webservice.
 	 */
-	public static List<Task> getAllTasks(String login, String hash, String date)
-			throws Exception {
+	public static List<Task> getAllTasks(String login, String hash, String date) throws Exception {
 
 		String URL = GET_ALL + login + "/" + hash + "/" + date;
-		// String URL = "http://app-serviceleantasks.rhcloud.com/api/task/test";
 		HttpClient client = new DefaultHttpClient();
 		HttpGet get = new HttpGet(URL);
 		HttpResponse responseGet = client.execute(get);
@@ -116,29 +123,58 @@ public class WebAPI {
 
 		if (resEntityGet != null) {
 			String retSrc = EntityUtils.toString(resEntityGet);
-			// parsing JSON
-			JSONObject result = new JSONObject(retSrc); // Convert String to
-														// JSON Object
+			Gson gson = new Gson();
+			
+			JsonParser parser = new JsonParser();
+		    JsonArray Jarray = parser.parse(retSrc).getAsJsonArray();
 
-			JSONArray tokenList = result.getJSONArray("names");
-			JSONObject oj = tokenList.getJSONObject(0);
-			String token = oj.getString("name");
+		    ArrayList<Task> lcs = new ArrayList<Task>();
+
+		    for(JsonElement obj : Jarray )
+		    {
+		        Task task = gson.fromJson( obj , Task.class);
+		        lcs.add(task);
+		    }
+			
+//			Type typeOfT = new TypeToken<List<Task>>(){}.getType();
+//			Task[] tasks = gson.fromJson(retSrc, Task[].class);
 		}
+		
+		
+//		if (resEntityGet != null) {
+//			String retSrc = EntityUtils.toString(resEntityGet);
+//			// parsing JSON
+//			JSONObject result = new JSONObject(retSrc); // Convert String to
+//														// JSON Object
+//
+//			JSONArray tokenList = result.getJSONArray("tasks");
+//		}
 
-		System.out.println(resEntityGet);
 		return new ArrayList<Task>();
 	}
 
-	public static boolean syncTasks() throws Exception {
-		JSONObject json = new JSONObject();
-		// json.put("username", login);
-		// json.put("password", password);
-
+	/**
+	 * Sends the tasks list to the WS for synchronization purposes.
+	 * @param username
+	 * @param hash
+	 * @param tasks
+	 * @return boolean True on success, False on failure.
+	 * @throws Exception
+	 */
+	public static boolean syncTasks(String username, String hash, List<Task> tasks) throws Exception {
 		String URL = SYNC;
+
+		Gson gson = new Gson();
+		SyncTasksList sct = new SyncTasksList();
+		sct.setUsername(username);
+		sct.setHash(hash);
+		sct.setTasks(tasks);
+		
 		DefaultHttpClient httpclient = new DefaultHttpClient();
 		HttpPost httpost = new HttpPost(URL);
+		String json = gson.toJson(sct);
 
-		StringEntity se = new StringEntity(json.toString());
+		StringEntity se = new StringEntity(json);
 		httpost.setEntity(se);
 
 		httpost.setHeader("Accept", "application/json");
@@ -147,7 +183,7 @@ public class WebAPI {
 		// Handles what is returned from the page
 		HttpResponse response = httpclient.execute(httpost);
 
-		if (response.getStatusLine().getStatusCode() == 201)
+		if (response.getStatusLine().getStatusCode() == 200)
 			return true;
 		else
 			return false;
