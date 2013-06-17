@@ -25,7 +25,7 @@ public class Tasks implements CRUD {
 
 	private String[] allColumns = { DBHelper.TASK_ID, DBHelper.TASK_TEXT,
 			DBHelper.TASK_CREATED_DATE, DBHelper.TASK_UPDATED_DATE,
-			DBHelper.TASK_CHECKED, DBHelper.TASK_ARCHIVED };
+			DBHelper.TASK_CHECKED, DBHelper.TASK_ARCHIVED, DBHelper.TASK_USERNAME };
 
 
 	public Tasks(SQLiteDatabase database)
@@ -46,6 +46,7 @@ public class Tasks implements CRUD {
 		values.put(DBHelper.TASK_UPDATED_DATE, task.getUpdatedDate().toString());
 		values.put(DBHelper.TASK_CHECKED, task.getCheckedInt());
 		values.put(DBHelper.TASK_ARCHIVED, task.getArchivedInt());
+		values.put(DBHelper.TASK_USERNAME, task.getUsername());
 
 		long insertId = database.insert(DBHelper.TABLE_TASKS, null, values);
 
@@ -92,6 +93,7 @@ public class Tasks implements CRUD {
 		values.put(DBHelper.TASK_UPDATED_DATE, new Date().toString());
 		values.put(DBHelper.TASK_CHECKED, task.getCheckedInt());
 		values.put(DBHelper.TASK_ARCHIVED, task.getArchivedInt());
+		values.put(DBHelper.TASK_USERNAME, task.getUsername());
 
 		database.update(DBHelper.TABLE_TASKS, values, DBHelper.TASK_ID + " = " + task.getId(), null);
 		
@@ -154,7 +156,7 @@ public class Tasks implements CRUD {
 	 */
 	@Override
 	public List<Task> select(String where) {
-		Log.d(TAG, "SELECT " + Arrays.toString(allColumns) + " FROM " + DBHelper.TABLE_USERS + " WHERE " + where );
+		Log.d(TAG, "SELECT " + Arrays.toString(allColumns) + " FROM " + DBHelper.TABLE_TASKS + " WHERE " + where );
 
 		List<Task> tasks = new ArrayList<Task>();
 		Cursor cursor = database.query(DBHelper.TABLE_TASKS, allColumns, where, null, null, null, null); 
@@ -185,6 +187,7 @@ public class Tasks implements CRUD {
 		Task.setUpdatedDate(cursor.getString(3));
 		Task.setChecked(cursor.getInt(4));
 		Task.setArchived(cursor.getInt(5));
+		Task.setUsername(cursor.getString(6));
 		return Task;
 	}
 }

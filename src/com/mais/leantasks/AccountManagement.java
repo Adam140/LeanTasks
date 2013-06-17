@@ -1,5 +1,12 @@
 package com.mais.leantasks;
 
+import java.util.List;
+
+import com.mais.leantasks.asyncTask.LoginTask;
+import com.mais.leantasks.asyncTask.RegisterTask;
+import com.mais.leantasks.model.User;
+import com.mais.leantasks.sql.Table;
+
 import android.app.ActionBar;
 import android.app.Activity;
 import android.content.Intent;
@@ -26,6 +33,14 @@ public class AccountManagement extends Activity {
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
+		
+		Table table = Table.getInstance(this);
+		List<User> users = (List<User>)table.users.select("usr_logged_in='1'");
+		if(!users.isEmpty()){
+			Intent intent = new Intent(this, MainActivity.class);
+			changeActivity(intent);
+		}
+		
 		ActionBar ab = getActionBar();
 		ab.setDisplayUseLogoEnabled(true);
 		ab.setDisplayShowTitleEnabled(false);
@@ -35,26 +50,8 @@ public class AccountManagement extends Activity {
 		progressBar = ((ProgressBar)findViewById(R.id.progressBarConnect));
 				
 		final EditText editTextLogin = (EditText)findViewById(R.id.editTextLogin);
-		editTextLogin.setOnFocusChangeListener(new OnFocusChangeListener() {
-		    @Override
-		    public void onFocusChange(View v, boolean hasFocus) {
-		        if(hasFocus && !hasClickedOnETLogin){
-		        	hasClickedOnETLogin = true;
-		        	editTextLogin.setText("");
-		        }
-		    }
-		});
 		
 		final EditText editTextPassword = (EditText)findViewById(R.id.editTextPassword);
-		editTextPassword.setOnFocusChangeListener(new OnFocusChangeListener() {
-		    @Override
-		    public void onFocusChange(View v, boolean hasFocus) {
-		        if(hasFocus && !hasClickedOnETPassword){
-		        	hasClickedOnETPassword = true;
-		        	editTextPassword.setText("");
-		        }
-		    }
-		});
 		
 		textInfo = (TextView)findViewById(R.id.textViewInfo);
 		textInfo.setText("");
@@ -106,10 +103,10 @@ public class AccountManagement extends Activity {
 				EditText editPasswd = (EditText)findViewById(R.id.editTextPassword);
 				String passwd = editPasswd.getText().toString();
 				
-				// TODO : link the application with DB using web service
+				button.setVisibility(View.INVISIBLE);
 				
-				intent = new Intent(view.getContext(), MainActivity.class);
-				startActivityForResult(intent, 0);
+				LoginTask loginTask = new LoginTask(progressBar, textInfo, this);
+				loginTask.execute(login, passwd);
 				
 				break;
 				
@@ -118,5 +115,13 @@ public class AccountManagement extends Activity {
 				startActivityForResult(intent, 0);
 				break;
 		}
+	}
+	
+	public void changeActivity(Intent intent){
+		startActivity(intent);
+	}
+	
+	@Override
+	public void onBackPressed() {
 	}
 }

@@ -27,12 +27,14 @@ public class DBHelper extends SQLiteOpenHelper {
 	public static final String TASK_UPDATED_DATE = "task_updated_date";
 	public static final String TASK_CHECKED = "task_checked";
 	public static final String TASK_ARCHIVED = "task_archived";
+	public static final String TASK_USERNAME = "task_username";
 	
 	public static final String USR_ID = "usr_ID";
 	public static final String USR_NAME = "usr_name";
 	public static final String USR_PASSWORD = "usr_password";
 	public static final String USR_LOGGED_IN = "usr_logged_in";
 	public static final String USR_LAST_SYNC_DATE = "usr_last_sync_date";
+
 
 	public DBHelper(Context context) {
 		super(context, DATABASE_NAME, null, DATABASE_VERSION);
@@ -48,6 +50,7 @@ public class DBHelper extends SQLiteOpenHelper {
 				+ TASK_TEXT + " TEXT,"
 				+ TASK_CREATED_DATE + " TEXT,"
 				+ TASK_UPDATED_DATE + " TEXT,"
+				+ TASK_USERNAME + " TEXT,"
 				+ TASK_CHECKED + " INTEGER," 
 				+ TASK_ARCHIVED + " INTEGER)";
 		db.execSQL(CREATE_TASKS_TABLE);

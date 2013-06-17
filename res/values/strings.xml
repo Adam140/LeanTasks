@@ -24,6 +24,7 @@
     <string name="password">Password</string>
     <string name="password2">Repeat password</string>
 <!-- Registration text info -->
+	<string name="wrong_login">Invalid username or password</string>
     <string name="empty_field">Some field is empty</string>
     <string name="not_available_login">Login is not available</string>
     <string name="service_problem">There is some problem with service, try later</string>

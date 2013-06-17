@@ -22,6 +22,9 @@ public class Task {
 	
 	@SerializedName("archived")
 	private boolean archived;
+	
+	@SerializedName("username")
+	private String username;
 
 	public long getId() {
 		return id;
@@ -92,11 +95,19 @@ public class Task {
 	public void setArchived(int archived) {
 		this.archived = archived == 1 ? true : false;
 	}
+	
+	public String getUsername() {
+		return username;
+	}
+
+	public void setUsername(String username) {
+		this.username = username;
+	}
 
 	@Override
 	public String toString() {
 		return "Task [id=" + id + ", text=" + text + ", created_date=" + createdDate + ", updated_date=" + updatedDate
-				+ ", checked=" + checked + ", archived=" + archived + "]";
+				+ ", username=" + username + ", checked=" + checked + ", archived=" + archived + "]";
 	}
 
 	public static String[] listToArray(List<Task> list) {
@@ -110,5 +121,7 @@ public class Task {
 
 		return values;
 	}
+
+
 
 }

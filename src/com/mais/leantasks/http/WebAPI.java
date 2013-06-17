@@ -1,5 +1,6 @@
 package com.mais.leantasks.http;
 
+import java.io.IOException;
 import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.Collection;
@@ -7,6 +8,7 @@ import java.util.List;
 
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
+import org.apache.http.ParseException;
 import org.apache.http.client.HttpClient;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.client.methods.HttpPost;
@@ -205,6 +207,21 @@ public class WebAPI {
 		if (networkInfo != null && networkInfo.isConnected()) {
 			return true;
 		}
+		return false;
+	}
+
+	public static boolean isCorrectCredentials(String login, String password) throws ParseException, IOException {
+		String URL = AUTH + login + "/" + password;
+		HttpClient client = new DefaultHttpClient();
+		HttpGet get = new HttpGet(URL);
+		HttpResponse responseGet = client.execute(get);
+		HttpEntity resEntityGet = responseGet.getEntity();
+
+		if (resEntityGet != null) {
+			String retSrc = EntityUtils.toString(resEntityGet);
+			return retSrc.trim().equals("true");
+		}
+		
 		return false;
 	}
 

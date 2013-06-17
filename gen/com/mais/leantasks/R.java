@@ -114,34 +114,35 @@ public final class R {
         public static final int confirm=0x7f070009;
         public static final int createAccount=0x7f070010;
         public static final int edit_task=0x7f070005;
-        /**  Registration text info 
-         */
-        public static final int empty_field=0x7f070014;
-        public static final int hello=0x7f070017;
+        public static final int empty_field=0x7f070015;
+        public static final int hello=0x7f070018;
         public static final int help=0x7f07000e;
-        public static final int introduce=0x7f070018;
+        public static final int introduce=0x7f070019;
         public static final int login=0x7f070011;
         public static final int logout=0x7f07000c;
         public static final int modify=0x7f070006;
-        public static final int newAccount=0x7f07001c;
-        public static final int newUser=0x7f07001a;
+        public static final int newAccount=0x7f07001d;
+        public static final int newUser=0x7f07001b;
         /**  Main layout 
          */
         public static final int new_task=0x7f070002;
-        public static final int not_available_login=0x7f070015;
+        public static final int not_available_login=0x7f070016;
         public static final int password=0x7f070012;
         public static final int password2=0x7f070013;
         public static final int rate_the_app=0x7f07000f;
-        public static final int register=0x7f07001b;
+        public static final int register=0x7f07001c;
         public static final int remove=0x7f070008;
-        public static final int service_problem=0x7f070016;
+        public static final int service_problem=0x7f070017;
         public static final int settings=0x7f07000d;
-        public static final int sign=0x7f070019;
+        public static final int sign=0x7f07001a;
         /**  Menu part 
          */
         public static final int sync=0x7f07000b;
         public static final int tasks=0x7f070003;
         public static final int undo=0x7f07000a;
+        /**  Registration text info 
+         */
+        public static final int wrong_login=0x7f070014;
     }
     public static final class style {
         /** 

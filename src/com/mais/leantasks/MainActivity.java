@@ -8,6 +8,7 @@ import android.annotation.SuppressLint;
 import android.app.ActionBar;
 import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -21,6 +22,7 @@ import com.mais.leantasks.asyncTask.GetTasksTask;
 import com.mais.leantasks.asyncTask.SyncTasksTask;
 import com.mais.leantasks.http.WebAPI;
 import com.mais.leantasks.model.Task;
+import com.mais.leantasks.model.User;
 import com.mais.leantasks.security.Encrypt;
 import com.mais.leantasks.sql.Table;
 
@@ -31,6 +33,8 @@ public class MainActivity extends Activity {
 	private List<Task> tasks;
 	private TaskArrayAdapter taskArrayAdapter;
 	private ProgressBar progressBar;
+	
+	private User user;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -41,7 +45,15 @@ public class MainActivity extends Activity {
 		setContentView(R.layout.activity_main);
 
 		table = Table.getInstance(this);
-		tasks = table.tasks.selectAll();
+		List<User> users = (List<User>)table.users.select("usr_logged_in='1'");
+		if(users.isEmpty()){
+			Intent intent = new Intent(this, AccountManagement.class);
+			startActivity(intent);
+		}
+		
+		user = users.get(0);
+		
+		tasks = table.tasks.select("task_username='" + user.getName() + "'");
 		listView = (ListView) findViewById(R.id.list_view_tasks);
 
 		taskArrayAdapter = new TaskArrayAdapter(this, R.layout.task, tasks);
@@ -69,11 +81,14 @@ public class MainActivity extends Activity {
 		case R.id.action_sync:
 			synchronizeTasks();
 			return true;
-
+		case R.id.action_logout:
+			logoutUser();
+			return true;
 		default:
 			return super.onOptionsItemSelected(item);
 		}
 	}
+
 
 	/**
 	 * Adding new task
@@ -93,9 +108,12 @@ public class MainActivity extends Activity {
 			task.setUpdatedDate(sdf.format(new Date()));
 			task.setArchived(false);
 			task.setChecked(false);
-
+			System.out.println(user.getName());
+			task.setUsername(user.getName());
+			
 			long id = table.tasks.create(task);
 			task.setId(id);
+			
 
 			this.tasks.add(task);
 			text.setText("");
@@ -144,6 +162,27 @@ public class MainActivity extends Activity {
 		getTasks.execute(username, hash, date);
 
 		tasks = getTasks.getTasks();
+	}
+	
+	private void logoutUser() {
+		
+		Table table = Table.getInstance(this);
+		List<User> users = (List<User>)table.users.select("usr_logged_in='1'");
+		if(!users.isEmpty()){
+			
+			User user = users.get(0);
+			user.setLoggedIn(0);
+			
+			table.users.update(user);
+			
+			Intent intent = new Intent(this, AccountManagement.class);
+			startActivity(intent);
+		}
+		
+	}
+	
+	@Override
+	public void onBackPressed() {
 	}
 
 	// /**
