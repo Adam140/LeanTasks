@@ -1,5 +1,6 @@
 package com.mais.leantasks.model;
 
+import java.util.ArrayList;
 import java.util.List;
 import com.google.gson.annotations.SerializedName;
 
@@ -13,7 +14,7 @@ public class SyncTasksList {
 	private String hash;
 	
 	@SerializedName("tasks")
-	private List<Task> tasks;
+	private List<TaskJSON_DTO> tasks;
 
 	public String getUsername() {
 		return username;
@@ -31,12 +32,17 @@ public class SyncTasksList {
 		this.hash = hash;
 	}
 
-	public List<Task> getTasks() {
+	public List<TaskJSON_DTO> getTasks() {
 		return tasks;
 	}
 
 	public void setTasks(List<Task> tasks) {
-		this.tasks = tasks;
+
+		this.tasks = new ArrayList<TaskJSON_DTO>();
+		for(Task task : tasks) {
+			this.tasks.add(new TaskJSON_DTO(task, getUsername()));
+		}
+		
 	}
 	
 }

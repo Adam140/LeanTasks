@@ -28,6 +28,7 @@ import com.google.gson.JsonParser;
 import com.google.gson.reflect.TypeToken;
 import com.mais.leantasks.model.SyncTasksList;
 import com.mais.leantasks.model.Task;
+import com.mais.leantasks.model.TaskJSON_DTO;
 
 public class WebAPI {
 	static final String ADRESS = "http://app-serviceleantasks.rhcloud.com/";
@@ -152,6 +153,14 @@ public class WebAPI {
 		return new ArrayList<Task>();
 	}
 
+	/**
+	 * Sends the tasks list to the WS for synchronization purposes.
+	 * @param username
+	 * @param hash
+	 * @param tasks
+	 * @return boolean True on success, False on failure.
+	 * @throws Exception
+	 */
 	public static boolean syncTasks(String username, String hash, List<Task> tasks) throws Exception {
 		String URL = SYNC;
 
@@ -164,16 +173,17 @@ public class WebAPI {
 		DefaultHttpClient httpclient = new DefaultHttpClient();
 		HttpPost httpost = new HttpPost(URL);
 		String json = gson.toJson(sct);
+
 		StringEntity se = new StringEntity(json);
 		httpost.setEntity(se);
 
-//		httpost.setHeader("Accept", "application/json");
-//		httpost.setHeader("Content-type", "application/json");
+		httpost.setHeader("Accept", "application/json");
+		httpost.setHeader("Content-type", "application/json");
 
 		// Handles what is returned from the page
 		HttpResponse response = httpclient.execute(httpost);
 
-		if (response.getStatusLine().getStatusCode() == 201)
+		if (response.getStatusLine().getStatusCode() == 200)
 			return true;
 		else
 			return false;
