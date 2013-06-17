@@ -8,6 +8,7 @@ import android.app.Activity;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.sax.StartElementListener;
+import android.view.View;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
@@ -79,13 +80,16 @@ public class LoginTask extends AsyncTask<String, Integer, Void> {
 					managementActivity.changeActivity(new Intent(activity, MainActivity.class));
 				} else {
 					publishProgress(R.string.wrong_login);
-					System.out.println("wrong login remote");
+					AccountManagement managementActivity = (AccountManagement)activity;
+					managementActivity.getButton().setVisibility(View.VISIBLE);
 					return null;
 				}
 			}
 			
 		} catch (Exception e1) {
 			publishProgress(R.string.service_problem);
+			AccountManagement managementActivity = (AccountManagement)activity;
+			managementActivity.getButton().setVisibility(View.VISIBLE);
 			return null;
 		}
 

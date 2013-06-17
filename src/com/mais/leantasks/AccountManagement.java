@@ -46,7 +46,7 @@ public class AccountManagement extends Activity {
 		ab.setDisplayShowTitleEnabled(false);
 		setContentView(R.layout.activity_connect);
 		
-		button = ((Button) findViewById(R.id.buttonLogin));
+		setButton(((Button) findViewById(R.id.buttonLogin)));
 		progressBar = ((ProgressBar)findViewById(R.id.progressBarConnect));
 				
 		final EditText editTextLogin = (EditText)findViewById(R.id.editTextLogin);
@@ -75,12 +75,12 @@ public class AccountManagement extends Activity {
 	{
 		if(hasFocus)
 		{
-			button.setVisibility(Button.VISIBLE);
+			getButton().setVisibility(Button.VISIBLE);
 			progressBar.setVisibility(ProgressBar.INVISIBLE);
 		}
 		else
 		{
-			button.setVisibility(Button.INVISIBLE);
+			getButton().setVisibility(Button.INVISIBLE);
 			progressBar.setVisibility(ProgressBar.VISIBLE);
 		}
 	}
@@ -103,7 +103,7 @@ public class AccountManagement extends Activity {
 				EditText editPasswd = (EditText)findViewById(R.id.editTextPassword);
 				String passwd = editPasswd.getText().toString();
 				
-				button.setVisibility(View.INVISIBLE);
+				getButton().setVisibility(View.INVISIBLE);
 				
 				LoginTask loginTask = new LoginTask(progressBar, textInfo, this);
 				loginTask.execute(login, passwd);
@@ -123,5 +123,13 @@ public class AccountManagement extends Activity {
 	
 	@Override
 	public void onBackPressed() {
+	}
+
+	public Button getButton() {
+		return button;
+	}
+
+	public void setButton(Button button) {
+		this.button = button;
 	}
 }
