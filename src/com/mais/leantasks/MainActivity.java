@@ -42,7 +42,7 @@ public class MainActivity extends Activity {
 		setContentView(R.layout.activity_main);
 
 		// won't need to be called every time
-//		getNewTasksFromWS();
+		//getNewTasksFromWS();
 		
 		table = Table.getInstance(this);
 		tasks = table.tasks.selectAll();
@@ -105,7 +105,7 @@ public class MainActivity extends Activity {
 	 * This function will be used to invoke task retrieval from the cloud.
 	 * TODO Use real user data and store tasks in the DB.
 	 */
-	public void getNewTasksFromWS() {
+	private void getNewTasksFromWS() {
 		
 		if (WebAPI.isNetworkAvailable(this)) {
 		
@@ -116,7 +116,7 @@ public class MainActivity extends Activity {
 			// mock data for testing purposes
 			String name = "admin";
 			String pass = Encrypt.md5("admin");
-			String date = "2013-06-01-12-00";
+			String date = "2010-05-01-12-00";
 			
 			GetTasksTask getTasks = new GetTasksTask(progressBar, this);
 			getTasks.execute(name, pass, date);
